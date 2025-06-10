@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { useLatestPrices } from './latest-prices-api';
+import { useLatestPrices } from './api';
 
 function PricesTable(): JSX.Element {
   const latestPrices = useLatestPrices();
