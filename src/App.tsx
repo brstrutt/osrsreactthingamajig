@@ -1,7 +1,7 @@
-import { JSX, useCallback } from 'react';
+import { JSX } from 'react';
 import './App.css';
 import Header from './header';
-import { useQuery } from '@tanstack/react-query';
+import { useLatestPrices } from './latest-prices-api';
 
 function App(): JSX.Element {
   return <>
@@ -15,12 +15,7 @@ function App(): JSX.Element {
 };
 
 function PricesTable(): JSX.Element {
-  const getPriceData = useCallback<() => Promise<ItemPrices>>(
-    async () => (await fetch('https://localhost:3000/osrs/latest')).json(),
-    []
-  );
-  const latestPrices = useQuery({queryKey: ['latest_prices'], queryFn: getPriceData});
-  
+  const latestPrices = useLatestPrices();
   return <>
     {latestPrices.status === 'pending' &&
       <div>table loading</div>
@@ -34,17 +29,6 @@ function PricesTable(): JSX.Element {
       )
     }
   </>;
-}
-
-type ItemPriceData = {
-  high: number,
-  highTime: number,
-  low: number,
-  lowTime: number
-}
-
-type ItemPrices = {
-  [itemId: string]: ItemPriceData
 }
 
 export default App;
