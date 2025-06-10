@@ -9,7 +9,7 @@ Open the devcontainer
 ### Development
 
 Start the dev server: `npm run dev`
-Auto lint the codebase: `npm run check`
+Auto lint the codebase: `npm run lint`
 Auto format the codebase: `npm run format`
 
 ### Production (Doesn't work yet, currently relying on the dev server proxying API requests to dodge CORS errors)
