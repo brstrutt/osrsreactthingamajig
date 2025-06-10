@@ -1,7 +1,7 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
-type ItemDetails = {
+export type ItemDetails = {
   id: number;
   name: string;
   members: boolean;

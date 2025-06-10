@@ -1,16 +1,30 @@
-import type { JSX } from 'react';
-import { useItemDetails } from './api';
+import { useMemo, type JSX } from 'react';
+import { ItemDetails, useItemDetails } from './api';
 
 function ItemDetailsTable(): JSX.Element {
-  const latestPrices = useItemDetails();
+  const items = useItemDetails();
   return (
     <>
-      {latestPrices.status === 'pending' && <div>table loading</div>}
-      {latestPrices.status === 'error' && <div>table ERROR!</div>}
-      {latestPrices.status === 'success' &&
-        latestPrices.data.map((itemDetails) => (
-          <div key={itemDetails.id}>{JSON.stringify(itemDetails)}</div>
-        ))}
+      {items.status === 'pending' && <div>table loading</div>}
+      {items.status === 'error' && <div>table ERROR!</div>}
+      {items.status === 'success' && (
+        <LoadedTable items={items.data} />
+      )}
+    </>
+  );
+}
+
+function LoadedTable(props: { items: ItemDetails[] }): JSX.Element {
+  const { items } = props;
+  const freeToPlayItems = useMemo(
+    () => items.filter((item) => !item.members),
+    [items],
+  );
+  return (
+    <>
+      {freeToPlayItems.map((item) => (
+        <div key={item.id}>{JSON.stringify(item)}</div>
+      ))}
     </>
   );
 }
