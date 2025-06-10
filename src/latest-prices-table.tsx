@@ -8,7 +8,7 @@ function PricesTable(): JSX.Element {
       {latestPrices.status === 'pending' && <div>table loading</div>}
       {latestPrices.status === 'error' && <div>table ERROR!</div>}
       {latestPrices.status === 'success' &&
-        Object.entries(latestPrices.data).map(([key, priceData]) => (
+        Object.entries(latestPrices.data.data).map(([key, priceData]) => (
           <div key={key}>{JSON.stringify(priceData)}</div>
         ))}
     </>

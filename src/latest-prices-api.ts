@@ -8,8 +8,12 @@ type ItemPriceData = {
   lowTime: number;
 };
 
-type ResponseObject = {
+type ItemPrices = {
   [itemId: string]: ItemPriceData;
+};
+
+type ResponseObject = {
+  data: ItemPrices;
 };
 
 export function useLatestPrices(): UseQueryResult<ResponseObject> {
