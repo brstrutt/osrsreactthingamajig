@@ -15,7 +15,7 @@ function App(): JSX.Element {
 };
 
 function PricesTable(): JSX.Element {
-  const getPriceData = useCallback(
+  const getPriceData = useCallback<() => Promise<ItemPrices>>(
     async () => (await fetch('https://localhost:3000/osrs/latest')).json(),
     []
   );
@@ -29,11 +29,22 @@ function PricesTable(): JSX.Element {
       <div>table ERROR!</div>
     }
     {latestPrices.status === 'success' &&
-      latestPrices.data.map(
-        (entry: any) => <div>{entry}</div>
+      Object.entries(latestPrices.data).map(
+        (entry: any) => <div>{JSON.stringify(entry)}</div>
       )
     }
   </>;
+}
+
+type ItemPriceData = {
+  high: number,
+  highTime: number,
+  low: number,
+  lowTime: number
+}
+
+type ItemPrices = {
+  [itemId: string]: ItemPriceData
 }
 
 export default App;
