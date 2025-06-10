@@ -15,7 +15,10 @@
   "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
-      "extensions": ["biomejs.biome"]
+      "extensions": [
+        "rvest.vs-code-prettier-eslint",
+        "dbaeumer.vscode-eslint"
+      ]
     }
   }
 
