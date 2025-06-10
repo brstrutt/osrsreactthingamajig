@@ -1,29 +1,20 @@
 # Rsbuild project
 
 ## Setup
-
-Install the dependencies:
-
-```bash
-pnpm install
-```
+Open the devcontainer
 
 ## Get started
-
 Start the dev server:
-
 ```bash
-pnpm dev
+npm run dev
 ```
 
 Build the app for production:
-
 ```bash
-pnpm build
+npm run build
 ```
 
 Preview the production build locally:
-
 ```bash
-pnpm preview
+npm run preview
 ```
