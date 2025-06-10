@@ -16,7 +16,7 @@ function App(): JSX.Element {
 
 function PricesTable(): JSX.Element {
   const getPriceData = useCallback(
-    async () => (await fetch('https://prices.runescape.wiki/api/v1/osrs/latest')).json(),
+    async () => (await fetch('https://localhost:3000/osrs/latest')).json(),
     []
   );
   const latestPrices = useQuery({queryKey: ['latest_prices'], queryFn: getPriceData});
