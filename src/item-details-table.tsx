@@ -7,9 +7,7 @@ function ItemDetailsTable(): JSX.Element {
     <>
       {items.status === 'pending' && <div>table loading</div>}
       {items.status === 'error' && <div>table ERROR!</div>}
-      {items.status === 'success' && (
-        <LoadedTable items={items.data} />
-      )}
+      {items.status === 'success' && <LoadedTable items={items.data} />}
     </>
   );
 }
@@ -20,6 +18,7 @@ function LoadedTable(props: { items: ItemDetails[] }): JSX.Element {
     () => items.filter((item) => !item.members),
     [items],
   );
+
   return (
     <>
       {freeToPlayItems.map((item) => (
