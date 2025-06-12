@@ -1,0 +1,45 @@
+name: Build and Publish
+on:
+  push: 
+    branches:
+      - main
+    paths-ignore:
+      - '**/*.md'
+      # Allow running workflow manually
+  workflow_dispatch:
+  
+# Set permissions of the GITHUBU_TOKEN to allow deployment to github pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-publish:
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      concurrency: ci-${{github.ref}}
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Run the build
+          uses: devcontainers/ci@v0.3
+          with:
+            # Change this to be your CI task/script
+            runCmd: npm run build --release
+
+        - name: Setup Pages
+          uses: actions/configure-pages@v5
+
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v3
+          with:
+            # Upload the public directory
+            path: './dist'
+
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
