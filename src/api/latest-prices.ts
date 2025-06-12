@@ -8,7 +8,7 @@ type ItemPriceData = {
   lowTime: number;
 };
 
-type ItemPrices = {
+export type ItemPrices = {
   [itemId: string]: ItemPriceData;
 };
 

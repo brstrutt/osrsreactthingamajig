@@ -2,6 +2,7 @@ import type { JSX } from 'react';
 import './App.css';
 import Header from './header';
 import ItemDetailsTable from './item-details-table';
+import LatestPricesTable from './latest-prices-table';
 
 function App(): JSX.Element {
   return (
@@ -11,6 +12,7 @@ function App(): JSX.Element {
         <h1>Rsbuild with React</h1>
         <p>Start building amazing things with Rsbuild.</p>
         <ItemDetailsTable />
+        <LatestPricesTable />
       </div>
     </>
   );
