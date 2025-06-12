@@ -24,7 +24,7 @@ export default [
   {
     plugins: {
       'react-hooks': reactHooks,
-      'prettier': prettierPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
