@@ -1,4 +1,4 @@
-import { type UseQueryResult, useQuery } from '@tanstack/react-query';
+import { UseSuspenseQueryResult, useSuspenseQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 export type ItemDetails = {
@@ -15,11 +15,11 @@ export type ItemDetails = {
 
 type ResponseObject = ItemDetails[];
 
-export function useItemDetails(): UseQueryResult<ResponseObject> {
+export function useItemDetails(): UseSuspenseQueryResult<ResponseObject> {
   const getItemDetails = useCallback<() => Promise<ResponseObject>>(
     async () =>
       (await fetch('https://prices.runescape.wiki/api/v1/osrs/mapping')).json(),
     [],
   );
-  return useQuery({ queryKey: ['item_details'], queryFn: getItemDetails });
+  return useSuspenseQuery({ queryKey: ['item_details'], queryFn: getItemDetails });
 }

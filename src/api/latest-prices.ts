@@ -1,4 +1,4 @@
-import { type UseQueryResult, useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery, UseSuspenseQueryResult } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 type ItemPriceData = {
@@ -16,11 +16,11 @@ type ResponseObject = {
   data: ItemPrices;
 };
 
-export function useLatestPrices(): UseQueryResult<ResponseObject> {
+export function useLatestPrices(): UseSuspenseQueryResult<ResponseObject> {
   const getPriceData = useCallback<() => Promise<ResponseObject>>(
     async () =>
       (await fetch('https://prices.runescape.wiki/api/v1/osrs/latest')).json(),
     [],
   );
-  return useQuery({ queryKey: ['latest_prices'], queryFn: getPriceData });
+  return useSuspenseQuery({ queryKey: ['latest_prices'], queryFn: getPriceData });
 }

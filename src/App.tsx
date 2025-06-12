@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { Suspense, type JSX } from 'react';
 import './App.css';
 import Header from './header';
 import ItemDetailsTable from './item-details-table';
@@ -8,8 +8,12 @@ function App(): JSX.Element {
   return (
     <>
       <Header />
-      <ItemDetailsTable />
-      <LatestPricesTable />
+      <Suspense>
+        <ItemDetailsTable />
+      </Suspense>
+      <Suspense>
+        <LatestPricesTable />
+      </Suspense>
     </>
   );
 }

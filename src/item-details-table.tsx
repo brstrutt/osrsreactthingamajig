@@ -5,7 +5,6 @@ function ItemDetailsTable(): JSX.Element {
   const items = useItemDetails();
   return (
     <>
-      {items.status === 'pending' && <div>table loading</div>}
       {items.status === 'error' && <div>table ERROR!</div>}
       {items.status === 'success' && <LoadedTable items={items.data} />}
     </>
