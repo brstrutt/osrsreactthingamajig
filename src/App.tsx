@@ -10,12 +10,12 @@ function App(): JSX.Element {
     <>
       <Header />
       <ErrorBoundary fallback={<div>Failed to load Item Details Table</div>}>
-        <Suspense>
+        <Suspense fallback={<div>Loading Item Details Table...</div>}>
           <ItemDetailsTable />
         </Suspense>
       </ErrorBoundary>
       <ErrorBoundary fallback={<div>Failed to load Latest Prices Table</div>}>
-        <Suspense>
+        <Suspense fallback={<div>Loading Latest Prices Table...</div>}>
           <LatestPricesTable />
         </Suspense>
       </ErrorBoundary>
