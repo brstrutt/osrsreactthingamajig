@@ -28,6 +28,7 @@ function LoadedTable(props: { items: ItemDetails[] }): JSX.Element {
       {freeToPlayItems.map((item) => (
         <tr key={item.id}>
           <th>
+            <img src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}/>
             {item.name}
             :
             <a href={`https://prices.runescape.wiki/osrs/item/${item.id}`} target="_blank" rel="noreferrer">
