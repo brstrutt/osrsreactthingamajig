@@ -7,4 +7,7 @@ export default defineConfig({
     // This tells RsBuild to use relative paths
     assetPrefix: './',
   },
+   html: {
+    title: 'Thingamajig',
+  },
 });
