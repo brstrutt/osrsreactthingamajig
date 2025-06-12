@@ -28,8 +28,10 @@ jobs:
         - name: Run the build
           uses: devcontainers/ci@v0.3
           with:
-            imageName: Node.js & TypeScript
             runCmd: npm run build --release
+
+        - name: List build output
+          run: ls -la .
 
         - name: Setup Pages
           uses: actions/configure-pages@v5
