@@ -9,5 +9,6 @@ export default defineConfig({
   },
    html: {
     title: 'Thingamajig',
+    favicon: './src/assets/favicon.ico',
   },
 });
