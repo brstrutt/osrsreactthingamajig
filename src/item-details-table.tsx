@@ -27,7 +27,17 @@ function LoadedTable(props: { items: ItemDetails[] }): JSX.Element {
       </tr>
       {freeToPlayItems.map((item) => (
         <tr key={item.id}>
-          <th>{item.name}</th>
+          <th>
+            {item.name}
+            :
+            <a href={`https://prices.runescape.wiki/osrs/item/${item.id}`} target="_blank" rel="noreferrer">
+              Prices
+            </a>
+            :
+            <a href={`https://oldschool.runescape.wiki/w/Special:Lookup?type=item&id=${item.id}`} target="_blank" rel="noreferrer">
+              Wiki
+            </a>
+          </th>
           <th>{item.value}</th>
         </tr>
       ))}
