@@ -4,11 +4,7 @@ import { ItemPrices, useLatestPrices } from './api';
 function PricesTable(): JSX.Element {
   const latestPrices = useLatestPrices();
   return (
-    <>
-      {latestPrices.status === 'pending' && <div>table loading</div>}
-      {latestPrices.status === 'error' && <div>table ERROR!</div>}
-      {latestPrices.status === 'success' && <LoadedTable prices={latestPrices.data.data} />}
-    </>
+    <LoadedTable prices={latestPrices.data.data} />
   );
 }
 

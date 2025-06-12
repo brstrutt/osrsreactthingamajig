@@ -4,10 +4,7 @@ import { ItemDetails, useItemDetails } from './api';
 function ItemDetailsTable(): JSX.Element {
   const items = useItemDetails();
   return (
-    <>
-      {items.status === 'error' && <div>table ERROR!</div>}
-      {items.status === 'success' && <LoadedTable items={items.data} />}
-    </>
+      <LoadedTable items={items.data} />
   );
 }
 
