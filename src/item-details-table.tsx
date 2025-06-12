@@ -20,11 +20,18 @@ function LoadedTable(props: { items: ItemDetails[] }): JSX.Element {
   );
 
   return (
-    <>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Value</th>
+      </tr>
       {freeToPlayItems.map((item) => (
-        <div key={item.id}>{JSON.stringify(item)}</div>
+        <tr key={item.id}>
+          <th>{item.name}</th>
+          <th>{item.value}</th>
+        </tr>
       ))}
-    </>
+    </table>
   );
 }
 
