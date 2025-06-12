@@ -28,6 +28,7 @@ jobs:
         - name: Run the build
           uses: devcontainers/ci@v0.3
           with:
+            push: never
             runCmd: npm run build --release
 
         - name: List build output
