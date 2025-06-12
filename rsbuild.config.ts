@@ -3,4 +3,8 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
   plugins: [pluginReact()],
+  output: {
+    // This tells RsBuild to use relative paths
+    assetPrefix: './',
+  },
 });

@@ -29,7 +29,7 @@ jobs:
           uses: devcontainers/ci@v0.3
           with:
             push: never
-            runCmd: npm run build --release
+            runCmd: npm run build
 
         - name: List build output
           run: ls -la .
