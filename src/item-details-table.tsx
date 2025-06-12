@@ -1,15 +1,19 @@
-import { useMemo, type JSX } from 'react';
-import { ItemDetails, useItemDetails } from './api';
+import { Suspense, useMemo, type JSX } from 'react';
+import { useItemDetails } from './api';
+import { ErrorBoundary } from 'react-error-boundary';
 
 function ItemDetailsTable(): JSX.Element {
-  const items = useItemDetails();
   return (
-      <LoadedTable items={items.data} />
-  );
+    <ErrorBoundary fallback={<div>Failed to load Item Details Table</div>}>
+      <Suspense fallback={<div>Loading Item Details Table...</div>}>
+        <LoadedTable />
+      </Suspense>
+    </ErrorBoundary>
+  )
 }
 
-function LoadedTable(props: { items: ItemDetails[] }): JSX.Element {
-  const { items } = props;
+function LoadedTable(): JSX.Element {
+  const items = useItemDetails().data;
   const freeToPlayItems = useMemo(
     () => items.filter((item) => !item.members),
     [items],

@@ -1,15 +1,19 @@
-import type { JSX } from 'react';
-import { ItemPrices, useLatestPrices } from './api';
+import { Suspense, type JSX } from 'react';
+import { useLatestPrices } from './api';
+import { ErrorBoundary } from 'react-error-boundary';
 
 function PricesTable(): JSX.Element {
-  const latestPrices = useLatestPrices();
   return (
-    <LoadedTable prices={latestPrices.data.data} />
+    <ErrorBoundary fallback={<div>Failed to load Latest Prices Table</div>}>
+      <Suspense fallback={<div>Loading Latest Prices Table...</div>}>
+        <LoadedTable />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
-function LoadedTable(props: { prices: ItemPrices }): JSX.Element {
-  const { prices } = props;
+function LoadedTable(): JSX.Element {
+  const prices = useLatestPrices().data.data;
 
   return (
     <table>
@@ -19,13 +23,12 @@ function LoadedTable(props: { prices: ItemPrices }): JSX.Element {
         <th>Low</th>
       </tr>
       {Object.entries(prices).map(([key, price]) => (
-          <tr key={key}>
-            <th>{key}</th>
-            <th>{price.high}</th>
-            <th>{price.low}</th>
-          </tr>
-        ))
-      }
+        <tr key={key}>
+          <th>{key}</th>
+          <th>{price.high}</th>
+          <th>{price.low}</th>
+        </tr>
+      ))}
     </table>
   );
 }
