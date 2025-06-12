@@ -26,8 +26,9 @@ jobs:
           uses: actions/checkout@v4
 
         - name: Run the build
-          uses: devcontainers/ci@v0.2
+          uses: devcontainers/ci@v0.3
           with:
+            imageName: Node.js & TypeScript
             runCmd: npm run build --release
 
         - name: Setup Pages
