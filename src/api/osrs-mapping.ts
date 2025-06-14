@@ -1,5 +1,5 @@
-import { UseSuspenseQueryResult, useSuspenseQuery } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { UseSuspenseQueryResult } from '@tanstack/react-query';
+import { useOsrsApi } from './osrs';
 
 export type ItemDetails = {
   id: number;
@@ -13,13 +13,6 @@ export type ItemDetails = {
   icon: string;
 };
 
-type ResponseObject = ItemDetails[];
-
-export function useOsrsMappingApi(): UseSuspenseQueryResult<ResponseObject> {
-  const getItemDetails = useCallback<() => Promise<ResponseObject>>(
-    async () =>
-      (await fetch('https://prices.runescape.wiki/api/v1/osrs/mapping')).json(),
-    [],
-  );
-  return useSuspenseQuery({ queryKey: ['item_details'], queryFn: getItemDetails });
+export function useOsrsMappingApi(): UseSuspenseQueryResult<ItemDetails[]> {
+  return useOsrsApi('mapping');
 }

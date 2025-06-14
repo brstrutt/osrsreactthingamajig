@@ -1,5 +1,5 @@
-import { useSuspenseQuery, UseSuspenseQueryResult } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { UseSuspenseQueryResult } from '@tanstack/react-query';
+import { useOsrsApi } from './osrs';
 
 type ItemPriceData = {
   high: number | null;
@@ -12,15 +12,6 @@ export type ItemPrices = {
   [itemId: string]: ItemPriceData;
 };
 
-type ResponseObject = {
-  data: ItemPrices;
-};
-
-export function useOsrsLatestApi(): UseSuspenseQueryResult<ResponseObject> {
-  const getPriceData = useCallback<() => Promise<ResponseObject>>(
-    async () =>
-      (await fetch('https://prices.runescape.wiki/api/v1/osrs/latest')).json(),
-    [],
-  );
-  return useSuspenseQuery({ queryKey: ['latest_prices'], queryFn: getPriceData });
+export function useOsrsLatestApi(): UseSuspenseQueryResult<{data: ItemPrices}> {
+  return useOsrsApi('latest');
 }
