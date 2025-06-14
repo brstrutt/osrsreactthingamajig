@@ -1,5 +1,5 @@
 import { ReactNode, Suspense, useMemo, type JSX } from 'react';
-import { ItemDetails, useOsrsMappingApi, useOsrsLatestApi } from './api';
+import { ItemDetails, useOsrsMappingApi, useOsrs1hApi } from './api';
 import DefaultErrorBoundary from './default-error-boundary';
 
 function HighAlchProfitTable(): JSX.Element {
@@ -50,9 +50,9 @@ type TableRow = {
 
 function useTableData(): TableRow[] {
   const items = useOsrsMappingApi().data;
-  const prices = useOsrsLatestApi().data.data;
+  const prices = useOsrs1hApi().data.data;
   const natureRunePrice: number = useMemo(
-    () => 561 in prices ? prices[561].low ?? prices[561].low ?? 180 : 180,
+    () => 561 in prices ? prices[561].avgLowPrice ?? prices[561].avgHighPrice ?? 180 : 180,
     [prices],
   );
 
@@ -62,7 +62,7 @@ function useTableData(): TableRow[] {
         .filter((item) => item.id in prices)
         .filter((item): item is Omit<ItemDetails, 'highalch'> & {highalch: number} => item.highalch !== undefined) // Filter out any items with no high alch value. Complex code to make sure compiler knows that highAlch CAN'T be undefined anymore
         .map((item) => {
-            const geValue = prices[item.id].low ?? prices[item.id].high ?? item.value;
+            const geValue = prices[item.id].avgLowPrice ?? prices[item.id].avgHighPrice ?? item.value;
             const cost = geValue + natureRunePrice;
             const profit = item.highalch - cost;
             const precentageProfit = Math.round((profit/cost) * 100);
