@@ -17,18 +17,22 @@ function LoadedTable(): JSX.Element {
 
   return (
     <table>
-      <tr>
-        <th>ItemID</th>
-        <th>High</th>
-        <th>Low</th>
-      </tr>
-      {Object.entries(prices).map(([key, price]) => (
-        <tr key={key}>
-          <th>{key}</th>
-          <th>{price.high}</th>
-          <th>{price.low}</th>
+      <thead>
+        <tr>
+          <th>ItemID</th>
+          <th>High</th>
+          <th>Low</th>
         </tr>
-      ))}
+      </thead>
+      <tbody>
+        {Object.entries(prices).map(([key, price]) => (
+          <tr key={key}>
+            <th>{key}</th>
+            <th>{price.high}</th>
+            <th>{price.low}</th>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 }

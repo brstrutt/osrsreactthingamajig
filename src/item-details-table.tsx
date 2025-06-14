@@ -21,27 +21,31 @@ function LoadedTable(): JSX.Element {
 
   return (
     <table>
-      <tr>
-        <th>Item</th>
-        <th>Value</th>
-      </tr>
-      {freeToPlayItems.map((item) => (
-        <tr key={item.id}>
-          <th>
-            <img src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}/>
-            {item.name}
-            :
-            <a href={`https://prices.runescape.wiki/osrs/item/${item.id}`} target="_blank" rel="noreferrer">
-              Prices
-            </a>
-            :
-            <a href={`https://oldschool.runescape.wiki/w/Special:Lookup?type=item&id=${item.id}`} target="_blank" rel="noreferrer">
-              Wiki
-            </a>
-          </th>
-          <th>{item.value}</th>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Value</th>
         </tr>
-      ))}
+      </thead>
+      <tbody>
+        {freeToPlayItems.map((item) => (
+          <tr key={item.id}>
+            <th>
+              <img src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}/>
+              {item.name}
+              :
+              <a href={`https://prices.runescape.wiki/osrs/item/${item.id}`} target="_blank" rel="noreferrer">
+                Prices
+              </a>
+              :
+              <a href={`https://oldschool.runescape.wiki/w/Special:Lookup?type=item&id=${item.id}`} target="_blank" rel="noreferrer">
+                Wiki
+              </a>
+            </th>
+            <th>{item.value}</th>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 }
