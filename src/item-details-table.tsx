@@ -1,5 +1,5 @@
 import { Suspense, useMemo, type JSX } from 'react';
-import { useItemDetails } from './api';
+import { useOsrsMappingApi } from './api';
 import DefaultErrorBoundary from './default-error-boundary';
 
 function ItemDetailsTable(): JSX.Element {
@@ -13,7 +13,7 @@ function ItemDetailsTable(): JSX.Element {
 }
 
 function LoadedTable(): JSX.Element {
-  const items = useItemDetails().data;
+  const items = useOsrsMappingApi().data;
   const freeToPlayItems = useMemo(
     () => items.filter((item) => !item.members),
     [items],

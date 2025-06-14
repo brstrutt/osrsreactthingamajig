@@ -15,7 +15,7 @@ export type ItemDetails = {
 
 type ResponseObject = ItemDetails[];
 
-export function useItemDetails(): UseSuspenseQueryResult<ResponseObject> {
+export function useOsrsMappingApi(): UseSuspenseQueryResult<ResponseObject> {
   const getItemDetails = useCallback<() => Promise<ResponseObject>>(
     async () =>
       (await fetch('https://prices.runescape.wiki/api/v1/osrs/mapping')).json(),

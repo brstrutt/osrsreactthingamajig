@@ -1,2 +1,2 @@
-export * from './latest-prices';
-export * from './item-details';
+export * from './osrs-latest';
+export * from './osrs-mapping';

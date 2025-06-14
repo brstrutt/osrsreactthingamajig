@@ -16,7 +16,7 @@ type ResponseObject = {
   data: ItemPrices;
 };
 
-export function useLatestPrices(): UseSuspenseQueryResult<ResponseObject> {
+export function useOsrsLatestApi(): UseSuspenseQueryResult<ResponseObject> {
   const getPriceData = useCallback<() => Promise<ResponseObject>>(
     async () =>
       (await fetch('https://prices.runescape.wiki/api/v1/osrs/latest')).json(),

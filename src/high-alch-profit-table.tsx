@@ -1,5 +1,5 @@
 import { ReactNode, Suspense, useMemo, type JSX } from 'react';
-import { ItemDetails, useItemDetails, useLatestPrices } from './api';
+import { ItemDetails, useOsrsMappingApi, useOsrsLatestApi } from './api';
 import DefaultErrorBoundary from './default-error-boundary';
 
 function HighAlchProfitTable(): JSX.Element {
@@ -49,8 +49,8 @@ type TableRow = {
 }
 
 function useTableData(): TableRow[] {
-  const items = useItemDetails().data;
-  const prices = useLatestPrices().data.data;
+  const items = useOsrsMappingApi().data;
+  const prices = useOsrsLatestApi().data.data;
   const natureRunePrice: number = useMemo(
     () => 561 in prices ? prices[561].low ?? prices[561].low ?? 180 : 180,
     [prices],

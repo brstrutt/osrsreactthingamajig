@@ -1,5 +1,5 @@
 import { Suspense, type JSX } from 'react';
-import { useLatestPrices } from './api';
+import { useOsrsLatestApi } from './api';
 import DefaultErrorBoundary from './default-error-boundary';
 
 function PricesTable(): JSX.Element {
@@ -13,7 +13,7 @@ function PricesTable(): JSX.Element {
 }
 
 function LoadedTable(): JSX.Element {
-  const prices = useLatestPrices().data.data;
+  const prices = useOsrsLatestApi().data.data;
 
   return (
     <table>
