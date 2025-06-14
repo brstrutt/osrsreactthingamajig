@@ -6,8 +6,8 @@ export type ItemDetails = {
   name: string;
   members: boolean;
   examine: string;
-  lowalch: number;
-  highalch: number;
+  lowalch?: number;
+  highalch?: number;
   limit: number;
   value: number;
   icon: string;

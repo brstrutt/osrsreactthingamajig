@@ -1,5 +1,5 @@
-import { Suspense, useMemo, type JSX } from 'react';
-import { useItemDetails, useLatestPrices } from './api';
+import { ReactNode, Suspense, useMemo, type JSX } from 'react';
+import { ItemDetails, useItemDetails, useLatestPrices } from './api';
 import DefaultErrorBoundary from './default-error-boundary';
 
 function HighAlchProfitTable(): JSX.Element {
@@ -13,22 +13,10 @@ function HighAlchProfitTable(): JSX.Element {
 }
 
 function LoadedTable(): JSX.Element {
-  const items = useItemDetails().data;
-  const prices = useLatestPrices().data.data;
-
-  const freeToPlayItems = useMemo(
-    () => items.filter((item) => !item.members),
-    [items],
-  );
-
-  const freeToPlayItemsWithPriceData = useMemo(
-    () => freeToPlayItems.map((item) => ({...item, ...prices[item.id]})),
-    [freeToPlayItems, prices],
-  );
-
+  const tableData = useTableData();
   const natureRuneData = useMemo(
-    () => freeToPlayItemsWithPriceData.find((item) => item.id === 561),
-    [freeToPlayItemsWithPriceData]
+    () => tableData.find((item) => item.id === 561),
+    [tableData]
   );
 
   return (
@@ -36,40 +24,76 @@ function LoadedTable(): JSX.Element {
       <thead>
         <tr>
           <th>Item</th>
-          <th>Price</th>
+          <th>Latest Low Price</th>
           <th>High Alch Value</th>
           <th>Profit</th>
           <th>Percentage Profit</th>
         </tr>
       </thead>
       <tbody>
-        {natureRuneData &&
-            <tr key={natureRuneData.id}>
-            <th>
-                <img src={`https://oldschool.runescape.wiki/images/${natureRuneData.icon.replaceAll(' ', '_')}`}/>
-                {natureRuneData.name}
-            </th>
-            <th>{natureRuneData.low}</th>
-            <th>{natureRuneData.highalch}</th>
-            <th>{natureRuneData.highalch - natureRuneData.low}</th>
-            <th>{(natureRuneData.highalch - natureRuneData.low)}</th>
-            </tr>
-        }
-        {natureRuneData && freeToPlayItemsWithPriceData.map((item) => (
-          <tr key={item.id}>
-            <th>
-              <img src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}/>
-              {item.name}
-            </th>
-            <th>{item.low}</th>
-            <th>{item.highalch}</th>
-            <th>{item.highalch - item.low - natureRuneData?.low}</th>
-            <th>{((item.highalch - item.low - natureRuneData?.low)/item.low) * 100}%</th>
-          </tr>
-        ))}
+        {natureRuneData && <TableRowComponent item={natureRuneData}/>}
+        {natureRuneData && tableData.map((item) => <TableRowComponent key={item.id} item={item}/>)}
       </tbody>
     </table>
   );
+}
+
+type TableRow = {
+    name: string,
+    id: number,
+    geValue: number,
+    highAlch: number,
+    profit: number,
+    precentageProfit: number,
+    icon: ReactNode,
+}
+
+function useTableData(): TableRow[] {
+  const items = useItemDetails().data;
+  const prices = useLatestPrices().data.data;
+  const natureRunePrice: number = useMemo(
+    () => 561 in prices ? prices[561].low ?? prices[561].low ?? 180 : 180,
+    [prices],
+  );
+
+  return useMemo(
+    () => items
+        .filter((item) => !item.members)
+        .filter((item) => item.id in prices)
+        .filter((item): item is Omit<ItemDetails, 'highalch'> & {highalch: number} => item.highalch !== undefined) // Filter out any items with no high alch value. Complex code to make sure compiler knows that highAlch CAN'T be undefined anymore
+        .map((item) => {
+            const geValue = prices[item.id].low ?? prices[item.id].high ?? item.value;
+            const cost = geValue + natureRunePrice;
+            const profit = item.highalch - cost;
+            const precentageProfit = Math.round((profit/cost) * 100);
+            return {
+                name: item.name,
+                id: item.id,
+                geValue,
+                highAlch: item.highalch,
+                profit,
+                precentageProfit,
+                icon: <img src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}/>
+            };
+        }),
+    [items, prices, natureRunePrice],
+  );
+}
+
+function TableRowComponent(props: {item: TableRow}): JSX.Element {
+    const {item} = props;
+    return (
+        <tr>
+            <th>
+                {item.icon}
+                {item.name}
+            </th>
+            <th>{item.geValue}</th>
+            <th>{item.highAlch}</th>
+            <th>{item.profit.toString()}</th>
+            <th>{item.precentageProfit.toString()}%</th>
+        </tr>
+    )
 }
 
 export default HighAlchProfitTable;

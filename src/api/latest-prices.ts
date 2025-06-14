@@ -2,10 +2,10 @@ import { useSuspenseQuery, UseSuspenseQueryResult } from '@tanstack/react-query'
 import { useCallback } from 'react';
 
 type ItemPriceData = {
-  high: number;
-  highTime: number;
-  low: number;
-  lowTime: number;
+  high: number | null;
+  highTime: number | null;
+  low: number | null;
+  lowTime: number | null;
 };
 
 export type ItemPrices = {
