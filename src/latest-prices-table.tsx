@@ -1,14 +1,14 @@
 import { Suspense, type JSX } from 'react';
 import { useLatestPrices } from './api';
-import { ErrorBoundary } from 'react-error-boundary';
+import DefaultErrorBoundary from './default-error-boundary';
 
 function PricesTable(): JSX.Element {
   return (
-    <ErrorBoundary fallback={<div>Failed to load Latest Prices Table</div>}>
+    <DefaultErrorBoundary>
       <Suspense fallback={<div>Loading Latest Prices Table...</div>}>
         <LoadedTable />
       </Suspense>
-    </ErrorBoundary>
+    </DefaultErrorBoundary>
   );
 }
 

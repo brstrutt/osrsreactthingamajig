@@ -1,14 +1,14 @@
 import { Suspense, useMemo, type JSX } from 'react';
 import { useItemDetails } from './api';
-import { ErrorBoundary } from 'react-error-boundary';
+import DefaultErrorBoundary from './default-error-boundary';
 
 function ItemDetailsTable(): JSX.Element {
   return (
-    <ErrorBoundary fallback={<div>Failed to load Item Details Table</div>}>
+    <DefaultErrorBoundary>
       <Suspense fallback={<div>Loading Item Details Table...</div>}>
         <LoadedTable />
       </Suspense>
-    </ErrorBoundary>
+    </DefaultErrorBoundary>
   )
 }
 
