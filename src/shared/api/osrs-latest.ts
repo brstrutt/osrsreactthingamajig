@@ -12,6 +12,8 @@ export type ItemPrices = {
   [itemId: string]: ItemPriceData;
 };
 
-export function useOsrsLatestApi(): UseSuspenseQueryResult<{data: ItemPrices}> {
+export function useOsrsLatestApi(): UseSuspenseQueryResult<{
+  data: ItemPrices;
+}> {
   return useOsrsApi('latest');
 }

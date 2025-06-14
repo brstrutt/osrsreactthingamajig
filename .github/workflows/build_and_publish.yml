@@ -1,13 +1,13 @@
 name: Build and Publish
 on:
-  push: 
+  push:
     branches:
       - main
     paths-ignore:
       - '**/*.md'
       # Allow running workflow manually
   workflow_dispatch:
-  
+
 # Set permissions of the GITHUBU_TOKEN to allow deployment to github pages
 permissions:
   contents: read
@@ -16,33 +16,33 @@ permissions:
 
 jobs:
   build-and-publish:
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-      runs-on: ubuntu-latest
-      concurrency: ci-${{github.ref}}
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    concurrency: ci-${{github.ref}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-        - name: Run the build
-          uses: devcontainers/ci@v0.3
-          with:
-            push: never
-            runCmd: npm run build
+      - name: Run the build
+        uses: devcontainers/ci@v0.3
+        with:
+          push: never
+          runCmd: npm run build
 
-        - name: List build output
-          run: ls -la .
+      - name: List build output
+        run: ls -la .
 
-        - name: Setup Pages
-          uses: actions/configure-pages@v5
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-        - name: Upload artifact
-          uses: actions/upload-pages-artifact@v3
-          with:
-            # Upload the public directory
-            path: './dist'
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the public directory
+          path: './dist'
 
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

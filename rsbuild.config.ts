@@ -7,7 +7,7 @@ export default defineConfig({
     // This tells RsBuild to use relative paths
     assetPrefix: './',
   },
-   html: {
+  html: {
     title: 'Thingamajig',
     favicon: './src/assets/favicon.ico',
   },

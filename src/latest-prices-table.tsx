@@ -1,6 +1,6 @@
 import { Suspense, type JSX } from 'react';
-import { useOsrsLatestApi } from './api';
-import DefaultErrorBoundary from './default-error-boundary';
+import { useOsrsLatestApi } from './shared/api';
+import DefaultErrorBoundary from './shared/default-error-boundary';
 
 function PricesTable(): JSX.Element {
   return (
