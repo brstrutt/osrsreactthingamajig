@@ -2,6 +2,7 @@ import { Suspense, useMemo, type JSX } from 'react';
 import DefaultErrorBoundary from './shared/default-error-boundary';
 import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
 import filterUndefined from './shared/filter-undefined';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -15,34 +16,68 @@ function HighAlchProfitTable(): JSX.Element {
 
 function LoadedTable(): JSX.Element {
   const tableData = useTableData();
-  const natureRuneData = useMemo(
-    () => tableData.find((item) => item.id === 561),
-    [tableData],
+
+  const columnHelper = createColumnHelper<TableRow>();
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor(row => row, {
+        id: 'itemName',
+        header: () => 'Item',
+        cell: row => <ItemNameComponent item={row.getValue()}/>,
+      }),
+      columnHelper.accessor('geValue', {
+        header: () => 'GE Value',
+      }),
+      columnHelper.accessor('cost', {
+        header: () => 'Total Cost',
+      }),
+      columnHelper.accessor('highAlch', {
+        header: () => 'High Alch Value',
+      }),
+      columnHelper.accessor('profit', {
+        header: () => 'Profit (gold)',
+      }),
+      columnHelper.accessor('precentageProfit', {
+        header: () => 'Profit (percentage)',
+      }),
+    ],
+    [columnHelper],
   );
 
-  const sortedTableData = useMemo(
-    () => tableData.sort((left, right) => right.precentageProfit - left.precentageProfit),
-    [tableData],
-  );
+  const table = useReactTable<TableRow>({
+    data: tableData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  })
 
   return (
     <table>
       <thead>
-        <tr>
-          <th>Item</th>
-          <th>Latest Low Price</th>
-          <th>Cost</th>
-          <th>High Alch Value</th>
-          <th>Profit</th>
-          <th>Percentage Profit</th>
-        </tr>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
       </thead>
       <tbody>
-        {natureRuneData && <TableRowComponent item={natureRuneData} />}
-        {natureRuneData &&
-          sortedTableData.map((item) => (
-            <TableRowComponent key={item.id} item={item} />
-          ))}
+        {table.getRowModel().rows.map(row => (
+          <tr key={row.id}>
+            {row.getVisibleCells().map(cell => (
+              <td key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   );
@@ -85,27 +120,18 @@ function useTableData(): TableRow[] {
   );
 }
 
-function TableRowComponent(props: { item: TableRow }): JSX.Element {
-  const { item } = props;
-  return (
-    <tr>
-      <th>
-        {item.iconComponent}
-        <a
-          href={`https://prices.runescape.wiki/osrs/item/${item.id}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {item.name}
-        </a>
-      </th>
-      <th>{item.geValue}</th>
-      <th>{item.cost}</th>
-      <th>{item.highAlch}</th>
-      <th>{item.profit.toString()}</th>
-      <th>{item.precentageProfit.toString()}%</th>
-    </tr>
-  );
+function ItemNameComponent(props: {item: TableRow}): JSX.Element {
+  const {item} = props;
+  return <>
+    {item.iconComponent}
+    <a
+      href={`https://prices.runescape.wiki/osrs/item/${item.id}`}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {item.name}
+    </a>
+  </>;
 }
 
 export default HighAlchProfitTable;
