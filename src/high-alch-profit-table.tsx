@@ -1,6 +1,7 @@
 import { Suspense, useMemo, type JSX } from 'react';
 import DefaultErrorBoundary from './shared/default-error-boundary';
 import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
+import filterUndefined from './shared/filter-undefined';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -62,10 +63,7 @@ function useTableData(): TableRow[] {
   return useMemo(
     () =>
       items
-        .filter(
-          (item): item is Omit<OsrsItem, 'highAlch'> & { highAlch: number } =>
-            item.highAlch !== undefined, // Filter out any items with no high alch value. Complex code to make sure compiler knows that highAlch CAN'T be undefined anymore
-        )
+        .filter(filterUndefined('highAlch'))
         .map((item) => {
           const geValue = item.geValue ?? item.value;
           const cost = geValue + natureRunePrice;
