@@ -20,6 +20,11 @@ function LoadedTable(): JSX.Element {
     [tableData],
   );
 
+  const sortedTableData = useMemo(
+    () => tableData.sort((left, right) => right.precentageProfit - left.precentageProfit),
+    [tableData],
+  );
+
   return (
     <table>
       <thead>
@@ -35,7 +40,7 @@ function LoadedTable(): JSX.Element {
       <tbody>
         {natureRuneData && <TableRowComponent item={natureRuneData} />}
         {natureRuneData &&
-          tableData.map((item) => (
+          sortedTableData.map((item) => (
             <TableRowComponent key={item.id} item={item} />
           ))}
       </tbody>
