@@ -2,7 +2,7 @@ import { Suspense, useMemo, type JSX } from 'react';
 import DefaultErrorBoundary from './shared/default-error-boundary';
 import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
 import filterUndefined from './shared/filter-undefined';
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -39,6 +39,7 @@ function LoadedTable(): JSX.Element {
       }),
       columnHelper.accessor('precentageProfit', {
         header: () => 'Profit (percentage)',
+        cell: row => row.getValue() + '%',
       }),
     ],
     [columnHelper],
@@ -48,6 +49,10 @@ function LoadedTable(): JSX.Element {
     data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting: [{ id: 'precentageProfit', desc: true }],
+    },
   })
 
   return (
