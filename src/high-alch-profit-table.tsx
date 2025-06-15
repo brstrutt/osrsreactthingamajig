@@ -1,6 +1,6 @@
-import { ReactNode, Suspense, useMemo, type JSX } from 'react';
-import { ItemDetails, useOsrsMappingApi, useOsrs1hApi } from './shared/api';
+import { Suspense, useMemo, type JSX } from 'react';
 import DefaultErrorBoundary from './shared/default-error-boundary';
+import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -25,6 +25,7 @@ function LoadedTable(): JSX.Element {
         <tr>
           <th>Item</th>
           <th>Latest Low Price</th>
+          <th>Cost</th>
           <th>High Alch Value</th>
           <th>Profit</th>
           <th>Percentage Profit</th>
@@ -41,61 +42,43 @@ function LoadedTable(): JSX.Element {
   );
 }
 
-type TableRow = {
-  name: string;
-  id: number;
-  geValue: number;
-  highAlch: number;
+type TableRow = OsrsItem & {
   profit: number;
+  cost: number,
   precentageProfit: number;
-  icon: ReactNode;
 };
 
 function useTableData(): TableRow[] {
-  const items = useOsrsMappingApi().data;
-  const prices = useOsrs1hApi().data.data;
+  const items = useOsrsItems();
+  const natureRune = useMemo(
+    () => items.find((item) => item.id === 561),
+    [items],
+  );
   const natureRunePrice: number = useMemo(
-    () =>
-      561 in prices
-        ? (prices[561].avgLowPrice ?? prices[561].avgHighPrice ?? 180)
-        : 180,
-    [prices],
+    () => natureRune?.geValue ?? 180,
+    [natureRune],
   );
 
   return useMemo(
     () =>
       items
-        .filter((item) => !item.members)
-        .filter((item) => item.id in prices)
         .filter(
-          (
-            item,
-          ): item is Omit<ItemDetails, 'highalch'> & { highalch: number } =>
-            item.highalch !== undefined,
-        ) // Filter out any items with no high alch value. Complex code to make sure compiler knows that highAlch CAN'T be undefined anymore
+          (item): item is Omit<OsrsItem, 'highAlch'> & { highAlch: number } =>
+            item.highAlch !== undefined, // Filter out any items with no high alch value. Complex code to make sure compiler knows that highAlch CAN'T be undefined anymore
+        )
         .map((item) => {
-          const geValue =
-            prices[item.id].avgLowPrice ??
-            prices[item.id].avgHighPrice ??
-            item.value;
+          const geValue = item.geValue ?? item.value;
           const cost = geValue + natureRunePrice;
-          const profit = item.highalch - cost;
+          const profit = item.highAlch - cost;
           const precentageProfit = Math.round((profit / cost) * 100);
           return {
-            name: item.name,
-            id: item.id,
-            geValue,
-            highAlch: item.highalch,
+            ...item,
             profit,
+            cost,
             precentageProfit,
-            icon: (
-              <img
-                src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}
-              />
-            ),
           };
         }),
-    [items, prices, natureRunePrice],
+    [items, natureRunePrice],
   );
 }
 
@@ -104,10 +87,11 @@ function TableRowComponent(props: { item: TableRow }): JSX.Element {
   return (
     <tr>
       <th>
-        {item.icon}
+        {item.iconComponent}
         {item.name}
       </th>
       <th>{item.geValue}</th>
+      <th>{item.cost}</th>
       <th>{item.highAlch}</th>
       <th>{item.profit.toString()}</th>
       <th>{item.precentageProfit.toString()}%</th>
