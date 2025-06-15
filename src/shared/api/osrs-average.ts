@@ -3,9 +3,9 @@ import { useOsrsApi } from './osrs';
 
 export type AverageItemPriceData = {
   avgHighPrice: number | null;
-  highPriceVolume: number | null;
+  highPriceVolume: number;
   avgLowPrice: number | null;
-  lowPriceVolume: number | null;
+  lowPriceVolume: number;
 };
 
 export type AverageItemPrices = {
