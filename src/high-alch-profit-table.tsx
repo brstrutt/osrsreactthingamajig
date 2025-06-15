@@ -91,7 +91,13 @@ function TableRowComponent(props: { item: TableRow }): JSX.Element {
     <tr>
       <th>
         {item.iconComponent}
-        {item.name}
+        <a
+          href={`https://prices.runescape.wiki/osrs/item/${item.id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {item.name}
+        </a>
       </th>
       <th>{item.geValue}</th>
       <th>{item.cost}</th>
