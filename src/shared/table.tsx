@@ -27,7 +27,7 @@ function Table<Row>(props: {
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       pagination: {
-        pageSize: 20,
+        pageSize: 15,
       },
     },
     state: {
