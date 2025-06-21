@@ -1,15 +1,35 @@
-import { type JSX } from 'react';
+import { useState, type JSX } from 'react';
 import './App.css';
 import HighAlchProfitTable from './high-alch-profit-table';
 import PickupProfitTable from './pickup-profit-table';
 
+type Tabs = 'highalch' | 'pickup';
+
 function App(): JSX.Element {
+  const [currentTab, setCurrentTab] = useState<Tabs>('highalch');
+
   return (
     <>
-      <header>React OSRS Price Thingamajig</header>
+      <header>
+        React OSRS Price Thingamajig
+        <div>
+          <button
+            onClick={() => setCurrentTab('highalch')}
+            disabled={currentTab === 'highalch'}
+          >
+            High Alch
+          </button>
+          <button
+            onClick={() => setCurrentTab('pickup')}
+            disabled={currentTab === 'pickup'}
+          >
+            Pickup
+          </button>
+        </div>
+      </header>
       <main>
-        <HighAlchProfitTable />
-        <PickupProfitTable />
+        {currentTab === 'highalch' && <HighAlchProfitTable />}
+        {currentTab === 'pickup' && <PickupProfitTable />}
       </main>
     </>
   );
