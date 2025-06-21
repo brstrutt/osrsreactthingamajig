@@ -19,3 +19,9 @@ main {
   display: flex;
   align-items: center;
 }
+
+.tableFooter {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

@@ -8,6 +8,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  Table,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -30,7 +31,18 @@ function LoadedTable(): JSX.Element {
       columnHelper.accessor((row) => row, {
         id: 'itemName',
         header: () => 'Item',
-        cell: (row) => <ItemNameComponent item={row.getValue()} />,
+        cell: (row) => (
+          <div className="osrsItemColumnCell">
+            {row.getValue().iconComponent}
+            <a
+              href={`https://prices.runescape.wiki/osrs/item/${row.getValue().id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {row.getValue().name}
+            </a>
+          </div>
+        ),
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
@@ -68,8 +80,8 @@ function LoadedTable(): JSX.Element {
     },
   });
 
-  return <>
-    <table>
+  return (
+    <table className='osrsTable'>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
@@ -97,18 +109,57 @@ function LoadedTable(): JSX.Element {
           </tr>
         ))}
       </tbody>
-      <tfoot>
-        <span>Showing {table.getRowModel().rows.length.toLocaleString()} of {table.getRowCount().toLocaleString()} Rows</span>
-        <span>Showing page: {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</span>
-        <button onClick={table.previousPage} disabled={!table.getCanPreviousPage()}>
+      <TableFooter table={table}/>
+    </table>
+  );
+}
+
+function TableFooter(props: {table: Table<TableRow>}): JSX.Element {
+  const {table} = props;
+
+  const currentPageIndex = table.getState().pagination.pageIndex;
+
+  const totalRowcount = useMemo(() => table.getRowCount(), [table]);
+  const numberOfRowsShown = useMemo(() => table.getRowModel().rows.length, [table]);
+  const rowsPerPage = useMemo(() => table.getState().pagination.pageSize, [table]);
+  const numberOfPages = useMemo(() => table.getPageCount(), [table]);
+
+  const currentPageFirstRowIndex = useMemo(() => currentPageIndex * rowsPerPage, [currentPageIndex, rowsPerPage]);
+  const currentPageLastRowIndex = useMemo(() => currentPageFirstRowIndex + numberOfRowsShown - 1, [currentPageFirstRowIndex, numberOfRowsShown]);
+
+  return (
+    <tfoot className='tableFooter'>
+      <span>
+        Showing {currentPageFirstRowIndex + 1} to {currentPageLastRowIndex + 1} of {totalRowcount} rows
+      </span>
+      <span>
+        <button
+          onClick={table.firstPage}
+          disabled={!table.getCanPreviousPage()}
+        >
+          1
+        </button>
+        <button
+          onClick={table.previousPage}
+          disabled={!table.getCanPreviousPage()}
+        >
           {'<'}
         </button>
-        <button onClick={table.nextPage} disabled={!table.getCanNextPage()}>
+        <button disabled={true}>
+          {currentPageIndex + 1}
+        </button>
+        <button
+          onClick={table.nextPage}
+          disabled={!table.getCanNextPage()}
+        >
           {'>'}
         </button>
-      </tfoot>
-    </table>
-  </>;
+        <button onClick={table.lastPage} disabled={!table.getCanNextPage()}>
+          {numberOfPages}
+        </button>
+      </span>
+    </tfoot>
+  );
 }
 
 type TableRow = OsrsItem & {
@@ -143,22 +194,6 @@ function useTableData(): TableRow[] {
         };
       }),
     [items, natureRunePrice],
-  );
-}
-
-function ItemNameComponent(props: { item: TableRow }): JSX.Element {
-  const { item } = props;
-  return (
-    <div className='osrsItemColumnCell'>
-      {item.iconComponent}
-      <a
-        href={`https://prices.runescape.wiki/osrs/item/${item.id}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {item.name}
-      </a>
-    </div>
   );
 }
 
