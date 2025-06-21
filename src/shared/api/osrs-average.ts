@@ -1,5 +1,9 @@
-import { UseSuspenseQueryResult } from '@tanstack/react-query';
-import { useOsrsApi } from './osrs';
+import {
+  useSuspenseQuery,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query';
+import { useOsrsApiQueryOptions } from './osrs';
 
 export type AverageItemPriceData = {
   avgHighPrice: number | null;
@@ -12,14 +16,20 @@ export type AverageItemPrices = {
   [itemId: string]: AverageItemPriceData;
 };
 
-export function useOsrs5mApi(): UseSuspenseQueryResult<{
-  data: AverageItemPrices;
-}> {
-  return useOsrsApi('5m');
+type Response = { data: AverageItemPrices };
+
+export function useOsrs5mApi(): UseSuspenseQueryResult<Response> {
+  return useSuspenseQuery(useOsrs5mApiQueryOptions());
 }
 
-export function useOsrs1hApi(): UseSuspenseQueryResult<{
-  data: AverageItemPrices;
-}> {
-  return useOsrsApi('1h');
+export function useOsrs5mApiQueryOptions(): UseSuspenseQueryOptions<Response> {
+  return useOsrsApiQueryOptions('5m');
+}
+
+export function useOsrs1hApi(): UseSuspenseQueryResult<Response> {
+  return useSuspenseQuery(useOsrs1hApiQueryOptions());
+}
+
+export function useOsrs1hApiQueryOptions(): UseSuspenseQueryOptions<Response> {
+  return useOsrsApiQueryOptions('1h');
 }

@@ -1,21 +1,22 @@
-import {
-  useSuspenseQuery,
-  UseSuspenseQueryResult,
-} from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
-export function useOsrsApi<Response>(
-  endpoint: string,
-): UseSuspenseQueryResult<Response> {
-  const getItemDetails = useCallback<() => Promise<Response>>(
-    async () =>
+export type OsrsEndpoints = 'latest' | 'mapping' | '5m' | '1h' | 'timeseries';
+
+export function useOsrsApiQueryOptions<Response>(
+  endpoint: OsrsEndpoints,
+): UseSuspenseQueryOptions<Response> {
+  return useMemo(() => getOsrsApiQueryOptions(endpoint), [endpoint]);
+}
+
+export function getOsrsApiQueryOptions<Response>(
+  endpoint: OsrsEndpoints,
+): UseSuspenseQueryOptions<Response> {
+  return {
+    queryKey: ['osrs', endpoint],
+    queryFn: async () =>
       (
         await fetch('https://prices.runescape.wiki/api/v1/osrs/' + endpoint)
       ).json(),
-    [endpoint],
-  );
-  return useSuspenseQuery({
-    queryKey: ['osrs', endpoint],
-    queryFn: getItemDetails,
-  });
+  };
 }

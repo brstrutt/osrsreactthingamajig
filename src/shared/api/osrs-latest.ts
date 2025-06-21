@@ -1,5 +1,9 @@
-import { UseSuspenseQueryResult } from '@tanstack/react-query';
-import { useOsrsApi } from './osrs';
+import {
+  useSuspenseQuery,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query';
+import { useOsrsApiQueryOptions } from './osrs';
 
 type ItemPriceData = {
   high: number | null;
@@ -12,8 +16,12 @@ export type ItemPrices = {
   [itemId: string]: ItemPriceData;
 };
 
-export function useOsrsLatestApi(): UseSuspenseQueryResult<{
-  data: ItemPrices;
-}> {
-  return useOsrsApi('latest');
+type Response = { data: ItemPrices };
+
+export function useOsrsLatestApi(): UseSuspenseQueryResult<Response> {
+  return useSuspenseQuery(useOsrsLatestApiQueryOptions());
+}
+
+export function useOsrsLatestApiQueryOptions(): UseSuspenseQueryOptions<Response> {
+  return useOsrsApiQueryOptions('latest');
 }
