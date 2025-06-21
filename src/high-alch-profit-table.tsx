@@ -97,19 +97,17 @@ function LoadedTable(): JSX.Element {
           </tr>
         ))}
       </tbody>
+      <tfoot>
+        <span>Showing {table.getRowModel().rows.length.toLocaleString()} of {table.getRowCount().toLocaleString()} Rows</span>
+        <span>Showing page: {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</span>
+        <button onClick={table.previousPage} disabled={!table.getCanPreviousPage()}>
+          {'<'}
+        </button>
+        <button onClick={table.nextPage} disabled={!table.getCanNextPage()}>
+          {'>'}
+        </button>
+      </tfoot>
     </table>
-    <div className="h-2" />
-    <pre>
-      Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
-      {table.getRowCount().toLocaleString()} Rows
-    </pre>
-    <pre>Showing page: {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</pre>
-    <button onClick={table.previousPage} disabled={!table.getCanPreviousPage()}>
-      {'<'}
-    </button>
-    <button onClick={table.nextPage} disabled={!table.getCanNextPage()}>
-      {'>'}
-    </button>
   </>;
 }
 
@@ -151,7 +149,7 @@ function useTableData(): TableRow[] {
 function ItemNameComponent(props: { item: TableRow }): JSX.Element {
   const { item } = props;
   return (
-    <>
+    <div className='osrsItemColumnCell'>
       {item.iconComponent}
       <a
         href={`https://prices.runescape.wiki/osrs/item/${item.id}`}
@@ -160,7 +158,7 @@ function ItemNameComponent(props: { item: TableRow }): JSX.Element {
       >
         {item.name}
       </a>
-    </>
+    </div>
   );
 }
 

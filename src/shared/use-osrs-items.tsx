@@ -34,9 +34,11 @@ export function useOsrsItems(): OsrsItem[] {
             name: item.name,
             id: item.id,
             iconComponent: (
-              <img
-                src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}
-              />
+              <span className='osrsItemIconWrapper'>
+                <img
+                  src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}
+                />
+              </span>
             ),
             value: item.value,
             geValue,

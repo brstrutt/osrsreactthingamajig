@@ -1,26 +1,21 @@
-body {
-  margin: 0;
-  color: #fff;
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  background-image: linear-gradient(to bottom, #020917, #101725);
-}
-
-.content {
+header, main {
   display: flex;
-  min-height: 100vh;
-  line-height: 1.1;
-  text-align: center;
-  flex-direction: column;
   justify-content: center;
 }
 
-.content h1 {
-  font-size: 3.6rem;
-  font-weight: 700;
+main {
+  padding-top: 2rem;
 }
 
-.content p {
-  font-size: 1.2rem;
-  font-weight: 400;
-  opacity: 0.5;
+.osrsItemIconWrapper {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.osrsItemColumnCell {
+  display: flex;
+  align-items: center;
 }
