@@ -26,6 +26,7 @@ function LoadedTable(): JSX.Element {
       columnHelper.accessor((row) => row, {
         id: 'itemName',
         header: () => 'Item',
+        size: 270,
         cell: (row) => (
           <div className="osrsItemColumnCell">
             {row.getValue().iconComponent}
@@ -41,19 +42,24 @@ function LoadedTable(): JSX.Element {
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
+        size: 100,
       }),
       columnHelper.accessor('cost', {
         header: () => 'Total Cost',
+        size: 100,
       }),
       columnHelper.accessor('highAlch', {
         header: () => 'High Alch Value',
+        size: 100,
       }),
       columnHelper.accessor('profit', {
         header: () => 'Profit (gold)',
+        size: 100,
       }),
       columnHelper.accessor('precentageProfit', {
         header: () => 'Profit (percentage)',
         cell: (row) => row.getValue() + '%',
+        size: 100,
       }),
     ],
     [columnHelper],

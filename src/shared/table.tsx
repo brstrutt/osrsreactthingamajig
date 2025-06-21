@@ -1,6 +1,4 @@
 import {
-  AccessorFnColumnDef,
-  AccessorKeyColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
@@ -8,15 +6,16 @@ import {
   SortingState,
   useReactTable,
   Table as TanstackTable,
+  ColumnDef,
 } from '@tanstack/react-table';
 import { JSX, useMemo } from 'react';
 import './table.css';
 
-type ColumnDef<Row> = AccessorKeyColumnDef<Row, Row> | AccessorFnColumnDef<Row, Row>;
-
 function Table<Row>(props: {
   data: Row[];
-  columns: ColumnDef<Row>[];
+  // Allow `any` here because that's what the library does. Also everything else I try draws a red squiggly at the callsite that only appears after restarting vscode.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  columns: ColumnDef<Row, any>[];
   sorting: SortingState;
 }): JSX.Element {
   const { data, columns, sorting } = props;
@@ -38,55 +37,75 @@ function Table<Row>(props: {
 
   return (
     <table className="osrsTable">
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
+      <div>
+        <colgroup>
+          {table.getLeafHeaders().map((header) => (
+            <col key={header.id} style={{ width: header.getSize() }} />
+          ))}
+        </colgroup>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </div>
       <TableFooter table={table} />
     </table>
   );
 }
 
-function TableFooter<Row>(props: {table: TanstackTable<Row>}): JSX.Element {
-  const {table} = props;
+function TableFooter<Row>(props: { table: TanstackTable<Row> }): JSX.Element {
+  const { table } = props;
 
   const currentPageIndex = table.getState().pagination.pageIndex;
 
   const totalRowcount = useMemo(() => table.getRowCount(), [table]);
-  const numberOfRowsShown = useMemo(() => table.getRowModel().rows.length, [table]);
-  const rowsPerPage = useMemo(() => table.getState().pagination.pageSize, [table]);
+  const numberOfRowsShown = useMemo(
+    () => table.getRowModel().rows.length,
+    [table],
+  );
+  const rowsPerPage = useMemo(
+    () => table.getState().pagination.pageSize,
+    [table],
+  );
   const numberOfPages = useMemo(() => table.getPageCount(), [table]);
 
-  const currentPageFirstRowIndex = useMemo(() => currentPageIndex * rowsPerPage, [currentPageIndex, rowsPerPage]);
-  const currentPageLastRowIndex = useMemo(() => currentPageFirstRowIndex + numberOfRowsShown - 1, [currentPageFirstRowIndex, numberOfRowsShown]);
+  const currentPageFirstRowIndex = useMemo(
+    () => currentPageIndex * rowsPerPage,
+    [currentPageIndex, rowsPerPage],
+  );
+  const currentPageLastRowIndex = useMemo(
+    () => currentPageFirstRowIndex + numberOfRowsShown - 1,
+    [currentPageFirstRowIndex, numberOfRowsShown],
+  );
 
   return (
-    <tfoot className='tableFooter'>
+    <tfoot className="tableFooter">
       <span>
-        Showing {currentPageFirstRowIndex + 1} to {currentPageLastRowIndex + 1} of {totalRowcount} rows
+        Showing {currentPageFirstRowIndex + 1} to {currentPageLastRowIndex + 1}{' '}
+        of {totalRowcount} rows
       </span>
       <span>
         <button
@@ -101,13 +120,8 @@ function TableFooter<Row>(props: {table: TanstackTable<Row>}): JSX.Element {
         >
           {'<'}
         </button>
-        <button disabled={true}>
-          {currentPageIndex + 1}
-        </button>
-        <button
-          onClick={table.nextPage}
-          disabled={!table.getCanNextPage()}
-        >
+        <button disabled={true}>{currentPageIndex + 1}</button>
+        <button onClick={table.nextPage} disabled={!table.getCanNextPage()}>
           {'>'}
         </button>
         <button onClick={table.lastPage} disabled={!table.getCanNextPage()}>
