@@ -22,7 +22,10 @@ export function useOsrs5mApi(): UseSuspenseQueryResult<Response, unknown> {
   return useSuspenseQuery(useOsrs5mApiQueryOptions());
 }
 
-export function useOsrs5mApiQueryOptions(): UseSuspenseQueryOptions<Response, unknown> {
+export function useOsrs5mApiQueryOptions(): UseSuspenseQueryOptions<
+  Response,
+  unknown
+> {
   return useOsrsApiQueryOptions('5m');
 }
 
@@ -30,6 +33,9 @@ export function useOsrs1hApi(): UseSuspenseQueryResult<Response, unknown> {
   return useSuspenseQuery(useOsrs1hApiQueryOptions());
 }
 
-export function useOsrs1hApiQueryOptions(): UseSuspenseQueryOptions<Response, unknown> {
+export function useOsrs1hApiQueryOptions(): UseSuspenseQueryOptions<
+  Response,
+  unknown
+> {
   return useOsrsApiQueryOptions('1h');
 }

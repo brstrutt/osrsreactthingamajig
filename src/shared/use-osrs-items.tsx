@@ -1,8 +1,5 @@
 import { ReactNode, useMemo } from 'react';
-import {
-  useOsrs1hApiQueryOptions,
-  useOsrsMappingApiQueryOptions,
-} from './api';
+import { useOsrs1hApiQueryOptions, useOsrsMappingApiQueryOptions } from './api';
 import { useSuspenseQueries } from '@tanstack/react-query';
 
 export type OsrsItem = {
@@ -20,7 +17,7 @@ export function useOsrsItems(): OsrsItem[] {
     combine: (results) => ({
       items: results[0].data,
       prices: results[1].data.data,
-    })
+    }),
   });
 
   return useMemo(

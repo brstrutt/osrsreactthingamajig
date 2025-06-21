@@ -17,12 +17,16 @@ export type ItemDetails = {
   icon: string;
 };
 
-export function useOsrsMappingApi(): UseSuspenseQueryResult<ItemDetails[], unknown> {
+export function useOsrsMappingApi(): UseSuspenseQueryResult<
+  ItemDetails[],
+  unknown
+> {
   return useSuspenseQuery(useOsrsMappingApiQueryOptions());
 }
 
 export function useOsrsMappingApiQueryOptions(): UseSuspenseQueryOptions<
-  ItemDetails[], unknown
+  ItemDetails[],
+  unknown
 > {
   return useOsrsApiQueryOptions('mapping');
 }

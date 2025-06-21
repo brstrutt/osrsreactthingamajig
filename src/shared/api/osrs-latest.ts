@@ -22,6 +22,9 @@ export function useOsrsLatestApi(): UseSuspenseQueryResult<Response, unknown> {
   return useSuspenseQuery(useOsrsLatestApiQueryOptions());
 }
 
-export function useOsrsLatestApiQueryOptions(): UseSuspenseQueryOptions<Response, unknown> {
+export function useOsrsLatestApiQueryOptions(): UseSuspenseQueryOptions<
+  Response,
+  unknown
+> {
   return useOsrsApiQueryOptions('latest');
 }
