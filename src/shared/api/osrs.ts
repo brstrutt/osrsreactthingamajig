@@ -5,13 +5,13 @@ export type OsrsEndpoints = 'latest' | 'mapping' | '5m' | '1h' | 'timeseries';
 
 export function useOsrsApiQueryOptions<Response>(
   endpoint: OsrsEndpoints,
-): UseSuspenseQueryOptions<Response> {
+): UseSuspenseQueryOptions<Response, unknown> {
   return useMemo(() => getOsrsApiQueryOptions(endpoint), [endpoint]);
 }
 
 export function getOsrsApiQueryOptions<Response>(
   endpoint: OsrsEndpoints,
-): UseSuspenseQueryOptions<Response> {
+): UseSuspenseQueryOptions<Response, unknown> {
   return {
     queryKey: ['osrs', endpoint],
     queryFn: async () =>

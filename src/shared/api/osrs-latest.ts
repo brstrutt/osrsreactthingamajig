@@ -18,10 +18,10 @@ export type ItemPrices = {
 
 type Response = { data: ItemPrices };
 
-export function useOsrsLatestApi(): UseSuspenseQueryResult<Response> {
+export function useOsrsLatestApi(): UseSuspenseQueryResult<Response, unknown> {
   return useSuspenseQuery(useOsrsLatestApiQueryOptions());
 }
 
-export function useOsrsLatestApiQueryOptions(): UseSuspenseQueryOptions<Response> {
+export function useOsrsLatestApiQueryOptions(): UseSuspenseQueryOptions<Response, unknown> {
   return useOsrsApiQueryOptions('latest');
 }

@@ -18,18 +18,18 @@ export type AverageItemPrices = {
 
 type Response = { data: AverageItemPrices };
 
-export function useOsrs5mApi(): UseSuspenseQueryResult<Response> {
+export function useOsrs5mApi(): UseSuspenseQueryResult<Response, unknown> {
   return useSuspenseQuery(useOsrs5mApiQueryOptions());
 }
 
-export function useOsrs5mApiQueryOptions(): UseSuspenseQueryOptions<Response> {
+export function useOsrs5mApiQueryOptions(): UseSuspenseQueryOptions<Response, unknown> {
   return useOsrsApiQueryOptions('5m');
 }
 
-export function useOsrs1hApi(): UseSuspenseQueryResult<Response> {
+export function useOsrs1hApi(): UseSuspenseQueryResult<Response, unknown> {
   return useSuspenseQuery(useOsrs1hApiQueryOptions());
 }
 
-export function useOsrs1hApiQueryOptions(): UseSuspenseQueryOptions<Response> {
+export function useOsrs1hApiQueryOptions(): UseSuspenseQueryOptions<Response, unknown> {
   return useOsrsApiQueryOptions('1h');
 }
