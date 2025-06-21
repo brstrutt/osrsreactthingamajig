@@ -4,13 +4,8 @@ import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
 import filterUndefined from './shared/filter-undefined';
 import {
   createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  Table,
-  useReactTable,
 } from '@tanstack/react-table';
+import Table from './shared/table';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -64,101 +59,12 @@ function LoadedTable(): JSX.Element {
     [columnHelper],
   );
 
-  const table = useReactTable<TableRow>({
-    data: tableData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: 20,
-      },
-    },
-    state: {
-      sorting: useMemo(() => [{ id: 'precentageProfit', desc: true }], []),
-    },
-  });
-
   return (
-    <table className='osrsTable'>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-      <TableFooter table={table}/>
-    </table>
-  );
-}
-
-function TableFooter(props: {table: Table<TableRow>}): JSX.Element {
-  const {table} = props;
-
-  const currentPageIndex = table.getState().pagination.pageIndex;
-
-  const totalRowcount = useMemo(() => table.getRowCount(), [table]);
-  const numberOfRowsShown = useMemo(() => table.getRowModel().rows.length, [table]);
-  const rowsPerPage = useMemo(() => table.getState().pagination.pageSize, [table]);
-  const numberOfPages = useMemo(() => table.getPageCount(), [table]);
-
-  const currentPageFirstRowIndex = useMemo(() => currentPageIndex * rowsPerPage, [currentPageIndex, rowsPerPage]);
-  const currentPageLastRowIndex = useMemo(() => currentPageFirstRowIndex + numberOfRowsShown - 1, [currentPageFirstRowIndex, numberOfRowsShown]);
-
-  return (
-    <tfoot className='tableFooter'>
-      <span>
-        Showing {currentPageFirstRowIndex + 1} to {currentPageLastRowIndex + 1} of {totalRowcount} rows
-      </span>
-      <span>
-        <button
-          onClick={table.firstPage}
-          disabled={!table.getCanPreviousPage()}
-        >
-          1
-        </button>
-        <button
-          onClick={table.previousPage}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<'}
-        </button>
-        <button disabled={true}>
-          {currentPageIndex + 1}
-        </button>
-        <button
-          onClick={table.nextPage}
-          disabled={!table.getCanNextPage()}
-        >
-          {'>'}
-        </button>
-        <button onClick={table.lastPage} disabled={!table.getCanNextPage()}>
-          {numberOfPages}
-        </button>
-      </span>
-    </tfoot>
+    <Table
+      data={tableData}
+      columns={columns}
+      sorting={useMemo(() => [{ id: 'precentageProfit', desc: true }], [])}
+    />
   );
 }
 

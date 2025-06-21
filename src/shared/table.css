@@ -1,0 +1,14 @@
+
+.osrsTable{
+    background-color: bisque;
+}
+
+.osrsTable th{
+    text-align: left;
+}
+
+.tableFooter {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

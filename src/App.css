@@ -20,8 +20,4 @@ main {
   align-items: center;
 }
 
-.tableFooter {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
+@import './shared/styles.css';
