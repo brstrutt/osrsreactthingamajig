@@ -1,5 +1,18 @@
+.osrsTableWrapper {
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: brown;
+  border-style: solid;
+  margin: 4px;
+}
+
 .osrsTable {
   background-color: bisque;
+  border-collapse: collapse;
+}
+
+.osrsTable thead {
+  background-color: brown;
 }
 
 .osrsTable th {
@@ -7,8 +20,25 @@
   white-space: nowrap;
 }
 
+.osrsTable th:not(:last-child) {
+  border-right: 1px solid bisque;
+}
+
+.osrsTable tr  {
+  border-bottom: 1px solid brown;
+}
+
+.osrsTable td, .osrsTable tfoot  {
+  padding: 4px;
+}
+
+.osrsTable tr:nth-child(even)  {
+  border-bottom: 1px solid brown;
+}
+
 .tableFooter {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  box-sizing: border-box;
 }
