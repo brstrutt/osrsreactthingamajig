@@ -6,6 +6,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
@@ -56,12 +57,18 @@ function LoadedTable(): JSX.Element {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 20,
+      },
+    },
     state: {
-      sorting: [{ id: 'precentageProfit', desc: true }],
+      sorting: useMemo(() => [{ id: 'precentageProfit', desc: true }], []),
     },
   });
 
-  return (
+  return <>
     <table>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
@@ -91,7 +98,19 @@ function LoadedTable(): JSX.Element {
         ))}
       </tbody>
     </table>
-  );
+    <div className="h-2" />
+    <pre>
+      Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
+      {table.getRowCount().toLocaleString()} Rows
+    </pre>
+    <pre>Showing page: {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</pre>
+    <button onClick={table.previousPage} disabled={!table.getCanPreviousPage()}>
+      {'<'}
+    </button>
+    <button onClick={table.nextPage} disabled={!table.getCanNextPage()}>
+      {'>'}
+    </button>
+  </>;
 }
 
 type TableRow = OsrsItem & {
