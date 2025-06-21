@@ -2,9 +2,7 @@ import { Suspense, useMemo, type JSX } from 'react';
 import DefaultErrorBoundary from './shared/default-error-boundary';
 import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
 import filterUndefined from './shared/filter-undefined';
-import {
-  createColumnHelper,
-} from '@tanstack/react-table';
+import { createColumnHelper } from '@tanstack/react-table';
 import Table from './shared/table';
 
 function HighAlchProfitTable(): JSX.Element {
@@ -69,10 +67,13 @@ function LoadedTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      sorting={useMemo(() => [
-        { id: 'precentageProfit', desc: true },
-        { id: 'profit', desc: true}
-      ], [])}
+      sorting={useMemo(
+        () => [
+          { id: 'precentageProfit', desc: true },
+          { id: 'profit', desc: true },
+        ],
+        [],
+      )}
     />
   );
 }

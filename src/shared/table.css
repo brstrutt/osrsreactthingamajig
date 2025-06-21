@@ -1,11 +1,10 @@
-
-.osrsTable{
-    background-color: bisque;
+.osrsTable {
+  background-color: bisque;
 }
 
-.osrsTable th{
-    text-align: left;
-    white-space: nowrap;
+.osrsTable th {
+  text-align: left;
+  white-space: nowrap;
 }
 
 .tableFooter {

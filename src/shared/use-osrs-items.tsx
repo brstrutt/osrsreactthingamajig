@@ -34,7 +34,7 @@ export function useOsrsItems(): OsrsItem[] {
             name: item.name,
             id: item.id,
             iconComponent: (
-              <span className='osrsItemIconWrapper'>
+              <span className="osrsItemIconWrapper">
                 <img
                   src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}
                 />
