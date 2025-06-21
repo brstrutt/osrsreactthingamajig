@@ -23,5 +23,3 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-@import './shared/styles.css';
