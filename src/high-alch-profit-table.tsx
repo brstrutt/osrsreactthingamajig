@@ -69,7 +69,10 @@ function LoadedTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      sorting={useMemo(() => [{ id: 'precentageProfit', desc: true }], [])}
+      sorting={useMemo(() => [
+        { id: 'precentageProfit', desc: true },
+        { id: 'profit', desc: true}
+      ], [])}
     />
   );
 }
