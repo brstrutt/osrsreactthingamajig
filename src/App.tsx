@@ -1,46 +1,30 @@
-import { useState, type JSX } from 'react';
+import { useMemo, type JSX } from 'react';
 import './App.css';
 import HighAlchProfitTable from './tables/high-alch-profit-table';
 import PickupProfitTable from './tables/pickup-profit-table';
+import { useTabs } from './shared';
 
 type Tabs = 'highalch' | 'pickup' | 'other';
 
 function App(): JSX.Element {
-  const [currentTab, setCurrentTab] = useState<Tabs>('highalch');
+  const { tabButtons, tabContents } = useTabs<Tabs>(
+    useMemo(
+      () => [
+        { id: 'highalch', name: 'High Alch', content: <HighAlchProfitTable /> },
+        { id: 'pickup', name: 'Pickup', content: <PickupProfitTable /> },
+        { id: 'other', name: 'Other', content: <div>other!</div> },
+      ],
+      [],
+    ),
+  );
 
   return (
     <>
       <header>
         <div className="title">React OSRS Price Thingamajig</div>
-        <div className="tabBar">
-          <button
-            onClick={() => setCurrentTab('highalch')}
-            disabled={currentTab === 'highalch'}
-            className="tab"
-          >
-            High Alch
-          </button>
-          <button
-            onClick={() => setCurrentTab('pickup')}
-            disabled={currentTab === 'pickup'}
-            className="tab"
-          >
-            Pickup
-          </button>
-          <button
-            onClick={() => setCurrentTab('other')}
-            disabled={currentTab === 'other'}
-            className="tab"
-          >
-            Other
-          </button>
-        </div>
+        <div className="tabBar">{tabButtons}</div>
       </header>
-      <main>
-        {currentTab === 'highalch' && <HighAlchProfitTable />}
-        {currentTab === 'pickup' && <PickupProfitTable />}
-        {currentTab === 'other' && <div>Other</div>}
-      </main>
+      <main>{tabContents}</main>
     </>
   );
 }
