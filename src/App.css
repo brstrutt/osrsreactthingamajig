@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 header {
   display: flex;
   justify-content: space-around;
@@ -8,17 +12,7 @@ main {
   justify-content: center;
 }
 
-.osrsItemIconWrapper {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.osrsItemColumnCell {
-  display: flex;
-  align-items: center;
+.text-clip-ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

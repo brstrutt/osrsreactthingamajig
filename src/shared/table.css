@@ -4,11 +4,13 @@
   border-color: brown;
   border-style: solid;
   margin: 4px;
+  min-width: 300;
 }
 
 .osrsTable {
   background-color: bisque;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .osrsTable thead {
@@ -29,7 +31,11 @@
 }
 
 .osrsTable td, .osrsTable tfoot  {
-  padding: 4px;
+  padding: 0px;
+}
+
+.osrsTable td:not(:last-child) {
+  border-right: 1px solid brown;
 }
 
 .osrsTable tr:nth-child(even)  {
@@ -40,5 +46,4 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  box-sizing: border-box;
 }

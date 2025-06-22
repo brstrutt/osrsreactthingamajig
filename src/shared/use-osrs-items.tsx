@@ -1,6 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 import { useOsrs1hApiQueryOptions, useOsrsMappingApiQueryOptions } from './api';
 import { useSuspenseQueries } from '@tanstack/react-query';
+import './use-osrs-items.css';
 
 export type OsrsItem = {
   id: number;

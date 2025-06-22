@@ -40,8 +40,14 @@ function Table<Row>(props: {
       <table className="osrsTable">
         <div>
           <colgroup>
-            {table.getLeafHeaders().map((header) => (
-              <col key={header.id} style={{ width: header.getSize() }} />
+            {table.getAllColumns().map((column) => (
+              <col
+                key={column.id}
+                style={{
+                  width: column.columnDef.size,
+                  maxWidth: column.columnDef.maxSize,
+                }}
+              />
             ))}
           </colgroup>
           <thead>
@@ -106,8 +112,8 @@ function TableFooter<Row>(props: { table: TanstackTable<Row> }): JSX.Element {
   return (
     <tfoot className="tableFooter">
       <span>
-        Showing {currentPageFirstRowIndex + 1} to {currentPageLastRowIndex + 1}{' '}
-        of {totalRowcount} rows
+        Rows {currentPageFirstRowIndex + 1} to {currentPageLastRowIndex + 1} of{' '}
+        {totalRowcount}
       </span>
       <span>
         <button
