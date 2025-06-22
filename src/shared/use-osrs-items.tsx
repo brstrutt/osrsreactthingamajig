@@ -1,5 +1,9 @@
 import { ReactNode, useMemo } from 'react';
-import { useOsrs1hApiQueryOptions, useOsrsMappingApiQueryOptions } from './api';
+import {
+  useOsrs1hApiQueryOptions,
+  useOsrsLatestApiQueryOptions,
+  useOsrsMappingApiQueryOptions,
+} from './api';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import './use-osrs-items.css';
 
@@ -14,10 +18,15 @@ export type OsrsItem = {
 
 export function useOsrsItems(): OsrsItem[] {
   const result = useSuspenseQueries({
-    queries: [useOsrsMappingApiQueryOptions(), useOsrs1hApiQueryOptions()],
+    queries: [
+      useOsrsMappingApiQueryOptions(),
+      useOsrsLatestApiQueryOptions(),
+      useOsrs1hApiQueryOptions(),
+    ],
     combine: (results) => ({
       items: results[0].data,
-      prices: results[1].data.data,
+      latestprices: results[1].data.data,
+      averagePrices: results[1].data.data,
     }),
   });
 
@@ -25,12 +34,19 @@ export function useOsrsItems(): OsrsItem[] {
     () =>
       result.items
         .filter((item) => !item.members)
-        .filter((item) => item.id in result.prices)
+        .filter((item) => item.id in result.latestprices)
         .map((item) => {
-          const geValue =
-            result.prices[item.id].avgLowPrice ??
-            result.prices[item.id].avgHighPrice ??
-            undefined;
+          const prices = result.latestprices[item.id];
+
+          let geValue = undefined;
+          if (prices.high && prices.low) {
+            geValue = (prices.high + prices.low) / 2;
+          } else if (prices.high) {
+            geValue = prices.high;
+          } else if (prices.low) {
+            geValue = prices.low;
+          }
+
           return {
             name: item.name,
             id: item.id,
@@ -46,6 +62,6 @@ export function useOsrsItems(): OsrsItem[] {
             highAlch: item.highalch,
           };
         }),
-    [result.items, result.prices],
+    [result.items, result.latestprices],
   );
 }
