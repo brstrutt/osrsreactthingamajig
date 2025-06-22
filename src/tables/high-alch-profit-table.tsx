@@ -1,9 +1,9 @@
 import { Suspense, useMemo, type JSX } from 'react';
-import DefaultErrorBoundary from './shared/default-error-boundary';
-import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
-import filterUndefined from './shared/filter-undefined';
+import DefaultErrorBoundary from '../shared/default-error-boundary';
+import { OsrsItem, useOsrsItems } from '../shared/use-osrs-items';
+import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
-import Table from './shared/table';
+import Table from '../shared/table/table';
 
 function HighAlchProfitTable(): JSX.Element {
   return (

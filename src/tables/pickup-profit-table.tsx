@@ -1,7 +1,7 @@
 import { JSX, useMemo } from 'react';
-import Table from './shared/table';
-import { OsrsItem, useOsrsItems } from './shared';
-import filterUndefined from './shared/filter-undefined';
+import Table from '../shared/table/table';
+import { OsrsItem, useOsrsItems } from '../shared';
+import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import './pickup-profit-table.css';
 

@@ -3,7 +3,7 @@
 }
 
 td .osrsTableCell {
-  display:flex;
+  display: flex;
   align-items: center;
   white-space: nowrap;
   overflow: hidden;

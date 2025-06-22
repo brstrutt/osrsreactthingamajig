@@ -1,7 +1,7 @@
 import { useState, type JSX } from 'react';
 import './App.css';
-import HighAlchProfitTable from './high-alch-profit-table';
-import PickupProfitTable from './pickup-profit-table';
+import HighAlchProfitTable from './tables/high-alch-profit-table';
+import PickupProfitTable from './tables/pickup-profit-table';
 
 type Tabs = 'highalch' | 'pickup';
 
