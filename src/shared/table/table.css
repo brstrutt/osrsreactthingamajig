@@ -4,8 +4,8 @@
   border-color: brown;
   border-style: solid;
   margin: 4px;
-  min-width: 300;
   background-color: bisque;
+  display: inline-block;
 }
 
 .osrsTable {

@@ -14,11 +14,6 @@ header .title {
   padding: 4px;
 }
 
-main {
-  display: flex;
-  justify-content: center;
-}
-
 .text-clip-ellipsis {
   white-space: nowrap;
   overflow: hidden;
