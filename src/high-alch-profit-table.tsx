@@ -4,7 +4,6 @@ import { OsrsItem, useOsrsItems } from './shared/use-osrs-items';
 import filterUndefined from './shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from './shared/table';
-import Cell from './shared/table-cell';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -27,7 +26,7 @@ function LoadedTable(): JSX.Element {
         header: () => 'Item',
         maxSize: 150,
         cell: (row) => (
-          <Cell rowData={row}>
+          <>
             {row.getValue().iconComponent}
             <a
               href={`https://prices.runescape.wiki/osrs/item/${row.getValue().id}`}
@@ -38,29 +37,29 @@ function LoadedTable(): JSX.Element {
             >
               {row.getValue().name}
             </a>
-          </Cell>
+          </>
         ),
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
-        maxSize: 100,
+        maxSize: 50,
       }),
       columnHelper.accessor('cost', {
         header: () => 'Total Cost',
-        maxSize: 100,
+        maxSize: 50,
       }),
       columnHelper.accessor('highAlch', {
         header: () => 'High Alch Value',
-        maxSize: 100,
+        maxSize: 50,
       }),
       columnHelper.accessor('profit', {
         header: () => 'Profit (gold)',
-        maxSize: 100,
+        maxSize: 50,
       }),
       columnHelper.accessor('precentageProfit', {
         header: () => 'Profit (percentage)',
         cell: (row) => row.getValue() + '%',
-        maxSize: 100,
+        maxSize: 50,
       }),
     ],
     [columnHelper],

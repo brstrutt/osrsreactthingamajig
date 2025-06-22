@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table';
 import { JSX, useMemo } from 'react';
 import './table.css';
+import Cell from './table-cell';
 
 function Table<Row>(props: {
   data: Row[];
@@ -44,7 +45,7 @@ function Table<Row>(props: {
               <col
                 key={column.id}
                 style={{
-                  width: column.columnDef.size,
+                  width: column.columnDef.maxSize,
                   maxWidth: column.columnDef.maxSize,
                 }}
               />
@@ -55,12 +56,14 @@ function Table<Row>(props: {
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
+                    {header.isPlaceholder ? null : (
+                      <Cell column={header.column}>
+                        {flexRender(
                           header.column.columnDef.header,
                           header.getContext(),
                         )}
+                      </Cell>
+                    )}
                   </th>
                 ))}
               </tr>
@@ -71,7 +74,12 @@ function Table<Row>(props: {
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <Cell column={cell.column}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
                   </td>
                 ))}
               </tr>

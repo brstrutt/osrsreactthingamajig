@@ -4,7 +4,6 @@ import { OsrsItem, useOsrsItems } from './shared';
 import filterUndefined from './shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import './pickup-profit-table.css';
-import Cell from './shared/table-cell';
 
 function PickupProfitTable(): JSX.Element {
   const tableData = useTableData();
@@ -15,9 +14,9 @@ function PickupProfitTable(): JSX.Element {
       columnHelper.accessor((row) => row, {
         id: 'itemName',
         header: () => 'Item',
-        maxSize: 150,
+        maxSize: 200,
         cell: (row) => (
-          <Cell rowData={row}>
+          <>
             {row.getValue().iconComponent}
             <a
               href={`https://prices.runescape.wiki/osrs/item/${row.getValue().id}`}
@@ -27,7 +26,7 @@ function PickupProfitTable(): JSX.Element {
             >
               {row.getValue().name}
             </a>
-          </Cell>
+          </>
         ),
       }),
       columnHelper.accessor('geValue', {

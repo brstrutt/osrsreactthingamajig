@@ -1,18 +1,18 @@
 import { JSX, ReactNode } from 'react';
 import './table-cell.css';
-import { CellContext } from '@tanstack/react-table';
+import { Column } from '@tanstack/react-table';
 
 function Cell<T>(props: {
-  rowData: CellContext<T, T>;
+  column: Column<T, unknown>;
   children: ReactNode;
 }): JSX.Element {
-  const { rowData, children } = props;
+  const { column, children } = props;
   return (
     <div
       className="osrsTableCell text-clip-ellipsis"
       style={{
-        width: rowData.column.columnDef.size,
-        maxWidth: rowData.column.columnDef.maxSize,
+        width: column.columnDef.size,
+        maxWidth: column.columnDef.maxSize,
       }}
     >
       {children}
