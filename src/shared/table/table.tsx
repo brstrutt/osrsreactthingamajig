@@ -39,55 +39,50 @@ function Table<Row>(props: {
   return (
     <div className="osrsTableWrapper">
       <table className="osrsTable">
-        <div>
-          <colgroup>
-            {table.getAllColumns().map((column) => (
-              <col
-                key={column.id}
-                style={{
-                  width: column.columnDef.maxSize,
-                  maxWidth: column.columnDef.maxSize,
-                }}
-              />
-            ))}
-          </colgroup>
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {header.isPlaceholder ? null : (
-                      <Cell column={header.column}>
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                      </Cell>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    <Cell column={cell.column}>
+        <colgroup>
+          {table.getAllColumns().map((column) => (
+            <col
+              key={column.id}
+              style={{
+                width: column.columnDef.maxSize,
+                maxWidth: column.columnDef.maxSize,
+              }}
+            />
+          ))}
+        </colgroup>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {header.isPlaceholder ? null : (
+                    <Cell column={header.column}>
                       {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
+                        header.column.columnDef.header,
+                        header.getContext(),
                       )}
                     </Cell>
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </div>
-        <TableFooter table={table} />
+                  )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  <Cell column={cell.column}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
+      <TableFooter table={table} />
     </div>
   );
 }
@@ -118,7 +113,7 @@ function TableFooter<Row>(props: { table: TanstackTable<Row> }): JSX.Element {
   );
 
   return (
-    <tfoot className="tableFooter">
+    <div className="tableFooter">
       <span>
         Rows {currentPageFirstRowIndex + 1} to {currentPageLastRowIndex + 1} of{' '}
         {totalRowcount}
@@ -144,7 +139,7 @@ function TableFooter<Row>(props: { table: TanstackTable<Row> }): JSX.Element {
           {numberOfPages}
         </button>
       </span>
-    </tfoot>
+    </div>
   );
 }
 

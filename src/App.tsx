@@ -10,9 +10,21 @@ function App(): JSX.Element {
   const { tabButtons, tabContents } = useTabs<Tabs>(
     useMemo(
       () => [
-        { id: 'highalch', name: 'High Alch', content: <HighAlchProfitTable /> },
-        { id: 'pickup', name: 'Pickup', content: <PickupProfitTable /> },
-        { id: 'other', name: 'Other', content: <div>other!</div> },
+        {
+          id: 'highalch',
+          name: 'High Alch',
+          content: <HighAlchProfitTable />,
+        },
+        {
+          id: 'pickup',
+          name: 'Pickup',
+          content: <PickupProfitTable />,
+        },
+        {
+          id: 'other',
+          name: 'Other',
+          content: <div>other!</div>,
+        },
       ],
       [],
     ),

@@ -34,7 +34,7 @@ export function useTabs<Tab extends string>(tabs: TabDefinition<Tab>[]): Tabs {
         </TabButton>
       )),
       tabContents: tabs.map((tab) => (
-        <>{currentTab === tab.id && tab.content}</>
+        <div key={tab.id}>{currentTab === tab.id && tab.content}</div>
       )),
     }),
     [tabs, currentTab, setCurrentTab],
