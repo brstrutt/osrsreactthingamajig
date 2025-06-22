@@ -42,24 +42,24 @@ function LoadedTable(): JSX.Element {
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
-        maxSize: 50,
+        maxSize: 90,
       }),
       columnHelper.accessor('cost', {
         header: () => 'Total Cost',
-        maxSize: 50,
+        maxSize: 90,
       }),
       columnHelper.accessor('highAlch', {
         header: () => 'High Alch Value',
-        maxSize: 50,
+        maxSize: 70,
       }),
       columnHelper.accessor('profit', {
         header: () => 'Profit (g)',
-        maxSize: 50,
+        maxSize: 90,
       }),
       columnHelper.accessor('precentageProfit', {
         header: () => 'Profit (%)',
         cell: (row) => row.getValue() + '%',
-        maxSize: 50,
+        maxSize: 70,
       }),
     ],
     [columnHelper],

@@ -73,7 +73,7 @@ function Table<Row>(props: {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
-                  <Cell column={cell.column}>
+                  <Cell column={cell.column} title={cell.getValue()}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Cell>
                 </td>
