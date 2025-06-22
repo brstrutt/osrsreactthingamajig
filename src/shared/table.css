@@ -26,11 +26,12 @@
   border-right: 1px solid bisque;
 }
 
-.osrsTable tr  {
+.osrsTable tr {
   border-bottom: 1px solid brown;
 }
 
-.osrsTable td, .osrsTable tfoot  {
+.osrsTable td,
+.osrsTable tfoot {
   padding: 0px;
 }
 
@@ -38,7 +39,7 @@
   border-right: 1px solid brown;
 }
 
-.osrsTable tr:nth-child(even)  {
+.osrsTable tr:nth-child(even) {
   border-bottom: 1px solid brown;
 }
 
