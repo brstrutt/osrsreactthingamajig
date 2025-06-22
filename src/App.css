@@ -2,9 +2,16 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0px;
+}
+
 header {
-  display: flex;
   justify-content: space-around;
+}
+
+header .title {
+  padding: 4px;
 }
 
 main {
@@ -17,3 +24,25 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.tabBar {
+  border-bottom: 1px solid rebeccapurple;
+  padding: 4px;
+  padding-bottom: 0px;
+}
+
+.tabBar button.tab {
+  border-bottom-style: none;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.tabBar button.tab:disabled {
+  color: black;
+  border-color: black;
+}
+
+.tabBar button.tab:enabled {
+  color: blue;
+  border-color: white;
+}
+
