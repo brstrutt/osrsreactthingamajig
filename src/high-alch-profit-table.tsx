@@ -53,11 +53,11 @@ function LoadedTable(): JSX.Element {
         maxSize: 50,
       }),
       columnHelper.accessor('profit', {
-        header: () => 'Profit (gold)',
+        header: () => 'Profit (g)',
         maxSize: 50,
       }),
       columnHelper.accessor('precentageProfit', {
-        header: () => 'Profit (percentage)',
+        header: () => 'Profit (%)',
         cell: (row) => row.getValue() + '%',
         maxSize: 50,
       }),

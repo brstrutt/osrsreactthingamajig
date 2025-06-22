@@ -9,7 +9,7 @@ function Cell<T>(props: {
   const { column, children } = props;
   return (
     <div
-      className="osrsTableCell text-clip-ellipsis"
+      className="osrsTableCell"
       style={{
         width: column.columnDef.size,
         maxWidth: column.columnDef.maxSize,
