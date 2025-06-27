@@ -1,12 +1,23 @@
-import { JSX, useMemo } from 'react';
+import { JSX, Suspense, useMemo } from 'react';
 import Table from '../shared/table/table';
 import { OsrsItem, useOsrsItems } from '../shared';
 import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import './pickup-profit-table.css';
 import { allShopItems } from './shop-flipping-profit-table-items';
+import DefaultErrorBoundary from '../shared/default-error-boundary';
 
 export function ShopFlippingProfitTable(): JSX.Element {
+  return (
+    <DefaultErrorBoundary>
+      <Suspense fallback={<div>Loading High Alch Profit Table...</div>}>
+        <LoadedTable />
+      </Suspense>
+    </DefaultErrorBoundary>
+  );
+}
+
+function LoadedTable(): JSX.Element {
   const tableData = useTableData();
 
   const columnHelper = createColumnHelper<TableRow>();
