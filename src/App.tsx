@@ -4,6 +4,7 @@ import HighAlchProfitTable from './tables/high-alch-profit-table';
 import PickupProfitTable from './tables/pickup-profit-table';
 import { useTabs } from './shared';
 import { ShopFlippingProfitTable } from './tables';
+import { OsrsItem } from './shared/osrs-item';
 
 type Tabs = 'highalch' | 'pickup' | 'shop';
 
@@ -43,7 +44,12 @@ function App(): JSX.Element {
 }
 
 function HighAlchTab(): JSX.Element {
-  return <HighAlchProfitTable />;
+  return (
+    <>
+      <OsrsItem id={561} />
+      <HighAlchProfitTable />
+    </>
+  );
 }
 
 function PickupTab(): JSX.Element {
