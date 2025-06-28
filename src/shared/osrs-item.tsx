@@ -1,5 +1,5 @@
 import { JSX, Suspense, useMemo } from 'react';
-import { useOsrsItems } from './use-osrs-items';
+import { OsrsItemData, useOsrsItems } from './use-osrs-items';
 import DefaultErrorBoundary from './default-error-boundary';
 import './osrs-item.css';
 import { ItemId, ItemName } from './items';
@@ -18,7 +18,7 @@ export function OsrsItem(props: { itemName: ItemName }): JSX.Element {
   );
 }
 
-export function Component(props: { itemName: ItemName }): JSX.Element {
+function Component(props: { itemName: ItemName }): JSX.Element {
   const { itemName } = props;
   const items = useOsrsItems();
   const itemData = useMemo(
@@ -29,21 +29,33 @@ export function Component(props: { itemName: ItemName }): JSX.Element {
   return (
     <div className="OsrsItem">
       {itemData ? (
-        <>
-          {itemData.iconComponent}
-          <a
-            href={`https://prices.runescape.wiki/osrs/item/${itemData.id}`}
-            target="_blank"
-            rel="noreferrer"
-            title={itemData.name}
-            className="text-clip-ellipsis"
-          >
-            {itemData.geValue ?? 0}g
-          </a>
-        </>
+        <OsrsItemComponent item={itemData} data="geValue" postfix={'g'} />
       ) : (
         'Item not found'
       )}
     </div>
+  );
+}
+
+export function OsrsItemComponent(props: {
+  item: OsrsItemData;
+  data?: keyof OsrsItemData;
+  postfix?: string;
+}): JSX.Element {
+  const { item, data = 'name', postfix } = props;
+  return (
+    <>
+      {item.iconComponent}
+      <a
+        href={`https://prices.runescape.wiki/osrs/item/${item.id}`}
+        target="_blank"
+        rel="noreferrer"
+        title={item.name}
+        className="text-clip-ellipsis"
+      >
+        {item[data]}
+        {postfix}
+      </a>
+    </>
   );
 }

@@ -1,6 +1,12 @@
 import { JSX, Suspense, useMemo } from 'react';
 import Table from '../shared/table/table';
-import { ItemId, ItemName, OsrsItem, useOsrsItems } from '../shared';
+import {
+  ItemId,
+  ItemName,
+  OsrsItemComponent,
+  OsrsItemData,
+  useOsrsItems,
+} from '../shared';
 import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import './pickup-profit-table.css';
@@ -30,19 +36,7 @@ function LoadedTable(): JSX.Element {
         id: 'itemName',
         header: () => 'Item',
         maxSize: 200,
-        cell: (row) => (
-          <>
-            {row.getValue().iconComponent}
-            <a
-              href={`https://prices.runescape.wiki/osrs/item/${row.getValue().id}`}
-              target="_blank"
-              rel="noreferrer"
-              className={row.getValue().location}
-            >
-              {row.getValue().name}
-            </a>
-          </>
-        ),
+        cell: (row) => <OsrsItemComponent item={row.getValue()} />,
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
@@ -61,7 +55,7 @@ function LoadedTable(): JSX.Element {
   );
 }
 
-type TableRow = OsrsItem & {
+type TableRow = OsrsItemData & {
   location: 'safe' | 'dangerous';
 };
 

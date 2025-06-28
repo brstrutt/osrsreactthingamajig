@@ -1,10 +1,10 @@
 import { Suspense, useMemo, type JSX } from 'react';
 import DefaultErrorBoundary from '../shared/default-error-boundary';
-import { OsrsItem, useOsrsItems } from '../shared/use-osrs-items';
+import { OsrsItemData, useOsrsItems } from '../shared/use-osrs-items';
 import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../shared/table/table';
-import { ItemId } from '../shared';
+import { ItemId, OsrsItemComponent } from '../shared';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -26,20 +26,7 @@ function LoadedTable(): JSX.Element {
         id: 'itemName',
         header: () => 'Item',
         maxSize: 150,
-        cell: (row) => (
-          <>
-            {row.getValue().iconComponent}
-            <a
-              href={`https://prices.runescape.wiki/osrs/item/${row.getValue().id}`}
-              target="_blank"
-              rel="noreferrer"
-              title={row.getValue().name}
-              className="text-clip-ellipsis"
-            >
-              {row.getValue().name}
-            </a>
-          </>
-        ),
+        cell: (row) => <OsrsItemComponent item={row.getValue()} />,
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
@@ -81,7 +68,7 @@ function LoadedTable(): JSX.Element {
   );
 }
 
-type TableRow = OsrsItem & {
+type TableRow = OsrsItemData & {
   profit: number;
   cost: number;
   precentageProfit: number;

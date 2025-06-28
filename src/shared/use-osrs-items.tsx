@@ -7,7 +7,7 @@ import {
 import { useSuspenseQueries } from '@tanstack/react-query';
 import './use-osrs-items.css';
 
-export type OsrsItem = {
+export type OsrsItemData = {
   id: number;
   name: string;
   iconComponent: ReactNode;
@@ -16,7 +16,7 @@ export type OsrsItem = {
   highAlch?: number;
 };
 
-export function useOsrsItems(): OsrsItem[] {
+export function useOsrsItems(): OsrsItemData[] {
   const result = useSuspenseQueries({
     queries: [
       useOsrsMappingApiQueryOptions(),
