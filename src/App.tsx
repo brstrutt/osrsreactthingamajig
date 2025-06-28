@@ -14,17 +14,17 @@ function App(): JSX.Element {
         {
           id: 'highalch',
           name: 'High Alch',
-          content: <HighAlchProfitTable />,
+          content: <HighAlchTab />,
         },
         {
           id: 'pickup',
           name: 'Pickup',
-          content: <PickupProfitTable />,
+          content: <PickupTab />,
         },
         {
           id: 'shop',
           name: 'Shop',
-          content: <ShopFlippingProfitTable />,
+          content: <ShopTab />,
         },
       ],
       [],
@@ -40,6 +40,18 @@ function App(): JSX.Element {
       <main>{tabContents}</main>
     </>
   );
+}
+
+function HighAlchTab(): JSX.Element {
+  return <HighAlchProfitTable />;
+}
+
+function PickupTab(): JSX.Element {
+  return <PickupProfitTable />;
+}
+
+function ShopTab(): JSX.Element {
+  return <ShopFlippingProfitTable />;
 }
 
 export default App;
