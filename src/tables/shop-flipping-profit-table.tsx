@@ -1,6 +1,6 @@
 import { JSX, Suspense, useMemo } from 'react';
 import Table from '../shared/table/table';
-import { OsrsItem, useOsrsItems } from '../shared';
+import { ItemId, ItemName, OsrsItem, useOsrsItems } from '../shared';
 import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import './pickup-profit-table.css';
@@ -84,7 +84,7 @@ function useTableData(): TableRow[] {
     () =>
       items
         .filter(filterUndefined('geValue'))
-        .filter((item) => allF2pShopItems.includes(item.id))
+        .filter((item) => allF2pShopItems.includes(ItemId[item.id] as ItemName))
         .map((item) => {
           const profit = item.geValue - item.value;
           const precentageProfit = Math.round((profit / item.value) * 100);

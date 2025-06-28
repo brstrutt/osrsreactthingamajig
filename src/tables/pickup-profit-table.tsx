@@ -1,6 +1,6 @@
 import { JSX, Suspense, useMemo } from 'react';
 import Table from '../shared/table/table';
-import { OsrsItem, useOsrsItems } from '../shared';
+import { ItemId, ItemName, OsrsItem, useOsrsItems } from '../shared';
 import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import './pickup-profit-table.css';
@@ -72,10 +72,14 @@ function useTableData(): TableRow[] {
     () =>
       items
         .filter(filterUndefined('geValue'))
-        .filter((item) => allF2pPickupItems.includes(item.id))
+        .filter((item) =>
+          allF2pPickupItems.includes(ItemId[item.id] as ItemName),
+        )
         .map((item) => ({
           ...item,
-          location: allF2pWildernessItemPickups.includes(item.id)
+          location: allF2pWildernessItemPickups.includes(
+            ItemId[item.id] as ItemName,
+          )
             ? 'dangerous'
             : 'safe',
         })),
