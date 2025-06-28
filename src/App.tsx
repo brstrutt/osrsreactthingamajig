@@ -46,7 +46,7 @@ function App(): JSX.Element {
 function HighAlchTab(): JSX.Element {
   return (
     <>
-      <OsrsItem id={561} />
+      <OsrsItem itemName={'Nature rune'} />
       <HighAlchProfitTable />
     </>
   );

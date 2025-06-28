@@ -4,6 +4,7 @@ import { OsrsItem, useOsrsItems } from '../shared/use-osrs-items';
 import filterUndefined from '../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../shared/table/table';
+import { ItemId } from '../shared';
 
 function HighAlchProfitTable(): JSX.Element {
   return (
@@ -89,7 +90,7 @@ type TableRow = OsrsItem & {
 function useTableData(): TableRow[] {
   const items = useOsrsItems();
   const natureRune = useMemo(
-    () => items.find((item) => item.id === 561),
+    () => items.find((item) => item.id === ItemId['Nature rune']),
     [items],
   );
   const natureRunePrice: number = useMemo(
