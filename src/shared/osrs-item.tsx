@@ -39,10 +39,11 @@ function Component(props: { itemName: ItemName }): JSX.Element {
 
 export function OsrsItemComponent(props: {
   item: OsrsItemData;
+  className?: string;
   data?: keyof OsrsItemData;
   postfix?: string;
 }): JSX.Element {
-  const { item, data = 'name', postfix } = props;
+  const { item, className, data = 'name', postfix } = props;
   return (
     <>
       {item.iconComponent}
@@ -51,7 +52,7 @@ export function OsrsItemComponent(props: {
         target="_blank"
         rel="noreferrer"
         title={item.name}
-        className="text-clip-ellipsis"
+        className={['text-clip-ellipsis', className].join(' ')}
       >
         {item[data]}
         {postfix}

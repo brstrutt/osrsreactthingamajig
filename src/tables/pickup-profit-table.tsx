@@ -36,7 +36,14 @@ function LoadedTable(): JSX.Element {
         id: 'itemName',
         header: () => 'Item',
         maxSize: 200,
-        cell: (row) => <OsrsItemComponent item={row.getValue()} />,
+        cell: (row) => (
+          <OsrsItemComponent
+            item={row.getValue()}
+            className={
+              row.getValue().location === 'dangerous' ? 'dangerous' : undefined
+            }
+          />
+        ),
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
