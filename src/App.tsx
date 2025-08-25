@@ -2,7 +2,6 @@ import { useMemo, type JSX } from 'react';
 import './App.css';
 import {HighAlchProfitTable, PickupProfitTable, ShopFlippingProfitTable} from './tables';
 import { useTabs } from './shared';
-import { OsrsItem } from './shared/osrs-item';
 
 type Tabs = 'highalch' | 'pickup' | 'shop';
 
@@ -13,17 +12,17 @@ function App(): JSX.Element {
         {
           id: 'highalch',
           name: 'High Alch',
-          content: <HighAlchTab />,
+          content: <HighAlchProfitTable />,
         },
         {
           id: 'pickup',
           name: 'Pickup',
-          content: <PickupTab />,
+          content: <PickupProfitTable />,
         },
         {
           id: 'shop',
           name: 'Shop',
-          content: <ShopTab />,
+          content: <ShopFlippingProfitTable />,
         },
       ],
       [],
@@ -39,23 +38,6 @@ function App(): JSX.Element {
       <main>{tabContents}</main>
     </>
   );
-}
-
-function HighAlchTab(): JSX.Element {
-  return (
-    <>
-      <OsrsItem itemName={'Nature rune'} />
-      <HighAlchProfitTable />
-    </>
-  );
-}
-
-function PickupTab(): JSX.Element {
-  return <PickupProfitTable />;
-}
-
-function ShopTab(): JSX.Element {
-  return <ShopFlippingProfitTable />;
 }
 
 export default App;
