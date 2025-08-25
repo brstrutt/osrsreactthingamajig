@@ -12,9 +12,9 @@ import { JSX, useMemo } from 'react';
 import './table.css';
 import Cell from './table-cell';
 
-function Table<Row, Value extends string | number>(props: {
+function Table<Row, RowData>(props: {
   data: Row[];
-  columns: ColumnDef<Row, Value>[];
+  columns: ColumnDef<Row, RowData>[];
   sorting: SortingState;
 }): JSX.Element {
   const { data, columns, sorting } = props;
@@ -72,7 +72,7 @@ function Table<Row, Value extends string | number>(props: {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
-                  <Cell column={cell.column} title={(cell.getValue() as Value).toString()}>
+                  <Cell column={cell.column} title={(cell.getValue() as string | number).toString()}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Cell>
                 </td>
