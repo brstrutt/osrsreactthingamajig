@@ -1,6 +1,6 @@
 import { Suspense, useMemo, type JSX } from 'react';
 import './App.css';
-import {HighAlchProfitTable, PickupProfitTable, ShopFlippingProfitTable} from './tables';
+import {HighAlchProfitTab, PickupProfitTab, ShopFlippingProfitTab} from './tabs';
 import { useTabs } from './shared';
 import DefaultErrorBoundary from './shared/default-error-boundary';
 
@@ -13,17 +13,17 @@ function App(): JSX.Element {
         {
           id: 'highalch',
           name: 'High Alch',
-          content: <HighAlchProfitTable />,
+          content: <HighAlchProfitTab />,
         },
         {
           id: 'pickup',
           name: 'Pickup',
-          content: <PickupProfitTable />,
+          content: <PickupProfitTab />,
         },
         {
           id: 'shop',
           name: 'Shop',
-          content: <ShopFlippingProfitTable />,
+          content: <ShopFlippingProfitTab />,
         },
       ],
       [],
