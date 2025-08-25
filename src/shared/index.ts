@@ -6,3 +6,4 @@ export * from './osrs-item';
 export * from './table/table';
 export * from './use-osrs-items';
 export * from './tabs';
+export * from './assert-type-extends-type';
