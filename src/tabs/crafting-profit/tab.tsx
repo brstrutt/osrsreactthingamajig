@@ -14,6 +14,12 @@ export function CraftingProfitTab(): JSX.Element {
       <OsrsItem itemName={'Ruby'} />
       <OsrsItem itemName={'Diamond'} />
     </div>
+    <div style={{display: 'flex'}}>
+      <OsrsItem itemName={'Uncut sapphire'} />
+      <OsrsItem itemName={'Uncut emerald'} />
+      <OsrsItem itemName={'Uncut ruby'} />
+      <OsrsItem itemName={'Uncut diamond'} />
+    </div>
     <CraftingProfitTable/>
   </>;
 }
