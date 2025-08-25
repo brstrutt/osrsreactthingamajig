@@ -4,10 +4,10 @@ import { Column } from '@tanstack/react-table';
 
 function Cell<T>(props: {
   column: Column<T, unknown>;
-  title: string;
+  title?: string;
   children: ReactNode;
 }): JSX.Element {
-  const { column, title, children } = props;
+  const { column, title = '', children } = props;
   return (
     <div
       className="osrsTableCell"

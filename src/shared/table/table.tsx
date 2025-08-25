@@ -12,11 +12,9 @@ import { JSX, useMemo } from 'react';
 import './table.css';
 import Cell from './table-cell';
 
-function Table<Row>(props: {
+function Table<Row, Value extends string | number>(props: {
   data: Row[];
-  // Allow `any` here because that's what the library does. Also everything else I try draws a red squiggly at the callsite that only appears after restarting vscode.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: ColumnDef<Row, any>[];
+  columns: ColumnDef<Row, Value>[];
   sorting: SortingState;
 }): JSX.Element {
   const { data, columns, sorting } = props;
@@ -73,7 +71,7 @@ function Table<Row>(props: {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
-                  <Cell column={cell.column} title={cell.getValue()}>
+                  <Cell column={cell.column} title={(cell.getValue() as Value).toString()}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Cell>
                 </td>
