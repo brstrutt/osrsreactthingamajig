@@ -18,9 +18,13 @@ export function CraftingProfitTable(): JSX.Element {
         maxSize: 150,
         cell: (row) => <OsrsItemComponent item={row.getValue()} />,
       }),
+      columnHelper.accessor('value', {
+        header: () => 'Current Value',
+        maxSize: 90,
+      }),
       columnHelper.accessor('geProfitFromOre', {
         header: () => 'GE Profit (ore)',
-        maxSize: 90,
+        maxSize: 70,
       }),
       columnHelper.accessor('geProfitFromBar', {
         header: () => 'GE Profit (bar)',
@@ -45,6 +49,7 @@ export function CraftingProfitTable(): JSX.Element {
 }
 
 type TableRow = OsrsItemData & {
+  value: number;
   geProfitFromOre: number;
   geProfitFromBar: number;
 };
@@ -79,15 +84,16 @@ function useTableData(): TableRow[] {
           (item) => {
             const gem = jewellery.find(product => product.name === ItemId[item.id] as string)?.gem as GemName;
 
-            const geValue = item.geValue ?? item.value;
+            const value = item.geValue ?? item.value;
 
             const oreCost = (materials['Gold ore']?.geValue ?? 300) + (materials[gem]?.geValue ?? 9999);
             const barCost = (materials['Gold bar']?.geValue ?? 300) + (materials[gem]?.geValue ?? 9999);
 
-            const geProfitFromOre = geValue - oreCost;
-            const geProfitFromBar = geValue - barCost;
+            const geProfitFromOre = value - oreCost;
+            const geProfitFromBar = value - barCost;
             return {
               ...item,
+              value,
               geProfitFromOre,
               geProfitFromBar,
             };
