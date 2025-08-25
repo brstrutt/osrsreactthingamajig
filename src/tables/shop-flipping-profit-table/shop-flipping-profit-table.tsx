@@ -9,7 +9,7 @@ import {
 } from '../../shared';
 import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
-import './pickup-profit-table.css';
+import '../styles.css';
 import { allShopItems } from './shop-flipping-profit-table-items';
 import DefaultErrorBoundary from '../../shared/default-error-boundary';
 
