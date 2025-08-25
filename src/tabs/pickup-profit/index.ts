@@ -1,1 +1,1 @@
-export {PickupProfitTable as PickupProfitTab} from './table';
+export * from './tab';
