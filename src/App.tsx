@@ -1,10 +1,10 @@
 import { Suspense, useMemo, type JSX } from 'react';
 import './App.css';
-import {HighAlchProfitTab, PickupProfitTab, ShopFlippingProfitTab} from './tabs';
+import {CraftingProfitTab, HighAlchProfitTab, PickupProfitTab, ShopFlippingProfitTab} from './tabs';
 import { useTabs } from './shared';
 import DefaultErrorBoundary from './shared/default-error-boundary';
 
-type Tabs = 'highalch' | 'pickup' | 'shop';
+type Tabs = 'highalch' | 'pickup' | 'shop' | 'crafting';
 
 function App(): JSX.Element {
   const { tabButtons, tabContents } = useTabs<Tabs>(
@@ -25,6 +25,11 @@ function App(): JSX.Element {
           name: 'Shop',
           content: <ShopFlippingProfitTab />,
         },
+        {
+          id: 'crafting',
+          name: 'Crafting',
+          content: <CraftingProfitTab />,
+        }
       ],
       [],
     ),
