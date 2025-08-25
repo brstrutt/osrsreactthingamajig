@@ -1,1 +1,1 @@
-export * from './shop-flipping-profit-table';
+export * from './table';

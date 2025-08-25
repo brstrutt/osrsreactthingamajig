@@ -1,1 +1,1 @@
-export * from './pickup-profit-table';
+export * from './table';

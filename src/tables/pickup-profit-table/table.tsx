@@ -10,10 +10,13 @@ import {
 import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import '../styles.css';
-import { allShopItems } from './shop-flipping-profit-table-items';
+import {
+  allF2pPickupItems,
+  allF2pWildernessItemPickups,
+} from './items';
 import DefaultErrorBoundary from '../../shared/default-error-boundary';
 
-export function ShopFlippingProfitTable(): JSX.Element {
+export function PickupProfitTable(): JSX.Element {
   return (
     <DefaultErrorBoundary>
       <Suspense fallback={<div>Loading High Alch Profit Table...</div>}>
@@ -33,23 +36,17 @@ function LoadedTable(): JSX.Element {
         id: 'itemName',
         header: () => 'Item',
         maxSize: 200,
-        cell: (row) => <OsrsItemComponent item={row.getValue()} />,
-      }),
-      columnHelper.accessor('value', {
-        header: () => 'Item Value',
-        maxSize: 100,
+        cell: (row) => (
+          <OsrsItemComponent
+            item={row.getValue()}
+            className={
+              row.getValue().location === 'dangerous' ? 'dangerous' : undefined
+            }
+          />
+        ),
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
-        maxSize: 100,
-      }),
-      columnHelper.accessor('profit', {
-        header: () => 'Profit (g)',
-        maxSize: 100,
-      }),
-      columnHelper.accessor('precentageProfit', {
-        header: () => 'Profit (%)',
-        cell: (row) => row.getValue() + '%',
         maxSize: 100,
       }),
     ],
@@ -60,17 +57,14 @@ function LoadedTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      sorting={useMemo(() => [{ id: 'profit', desc: true }], [])}
+      sorting={useMemo(() => [{ id: 'geValue', desc: true }], [])}
     />
   );
 }
 
 type TableRow = OsrsItemData & {
-  profit: number;
-  precentageProfit: number;
+  location: 'safe' | 'dangerous';
 };
-
-const allF2pShopItems = [...allShopItems];
 
 function useTableData(): TableRow[] {
   const items = useOsrsItems();
@@ -79,17 +73,17 @@ function useTableData(): TableRow[] {
     () =>
       items
         .filter(filterUndefined('geValue'))
-        .filter((item) => allF2pShopItems.includes(ItemId[item.id] as ItemName))
-        .map((item) => {
-          const profit = item.geValue - item.value;
-          const precentageProfit = Math.round((profit / item.value) * 100);
-
-          return {
-            ...item,
-            profit,
-            precentageProfit,
-          };
-        }),
+        .filter((item) =>
+          allF2pPickupItems.includes(ItemId[item.id] as ItemName),
+        )
+        .map((item) => ({
+          ...item,
+          location: allF2pWildernessItemPickups.includes(
+            ItemId[item.id] as ItemName,
+          )
+            ? 'dangerous'
+            : 'safe',
+        })),
     [items],
   );
 }
