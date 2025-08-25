@@ -1,9 +1,7 @@
 import { useMemo, type JSX } from 'react';
 import './App.css';
-import HighAlchProfitTable from './tables/high-alch-profit-table';
-import PickupProfitTable from './tables/pickup-profit-table';
+import {HighAlchProfitTable, PickupProfitTable, ShopFlippingProfitTable} from './tables';
 import { useTabs } from './shared';
-import { ShopFlippingProfitTable } from './tables';
 import { OsrsItem } from './shared/osrs-item';
 
 type Tabs = 'highalch' | 'pickup' | 'shop';

@@ -1,4 +1,4 @@
-import { ItemName } from '../shared';
+import { ItemName } from '../../shared';
 
 const generalStoreItems: ItemName[] = [
   'Pot',

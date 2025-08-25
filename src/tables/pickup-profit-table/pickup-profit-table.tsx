@@ -1,20 +1,20 @@
 import { JSX, Suspense, useMemo } from 'react';
-import Table from '../shared/table/table';
+import Table from '../../shared/table/table';
 import {
   ItemId,
   ItemName,
   OsrsItemComponent,
   OsrsItemData,
   useOsrsItems,
-} from '../shared';
-import filterUndefined from '../shared/filter-undefined';
+} from '../../shared';
+import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import './pickup-profit-table.css';
 import {
   allF2pPickupItems,
   allF2pWildernessItemPickups,
 } from './pickup-profit-table-items';
-import DefaultErrorBoundary from '../shared/default-error-boundary';
+import DefaultErrorBoundary from '../../shared/default-error-boundary';
 
 function PickupProfitTable(): JSX.Element {
   return (
