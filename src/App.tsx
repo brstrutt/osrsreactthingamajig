@@ -1,7 +1,8 @@
-import { useMemo, type JSX } from 'react';
+import { Suspense, useMemo, type JSX } from 'react';
 import './App.css';
 import {HighAlchProfitTable, PickupProfitTable, ShopFlippingProfitTable} from './tables';
 import { useTabs } from './shared';
+import DefaultErrorBoundary from './shared/default-error-boundary';
 
 type Tabs = 'highalch' | 'pickup' | 'shop';
 
@@ -35,7 +36,13 @@ function App(): JSX.Element {
         <div className="title">React OSRS Price Thingamajig</div>
         <div className="tabBar">{tabButtons}</div>
       </header>
-      <main>{tabContents}</main>
+      <main>
+        <DefaultErrorBoundary>
+          <Suspense fallback={<div>Loading Page...</div>}>
+            {tabContents}
+          </Suspense>
+        </DefaultErrorBoundary>
+      </main>
     </>
   );
 }

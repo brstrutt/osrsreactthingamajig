@@ -1,4 +1,4 @@
-import { JSX, Suspense, useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 import Table from '../../shared/table/table';
 import {
   ItemId,
@@ -11,19 +11,8 @@ import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import '../styles.css';
 import { allShopItems } from './items';
-import DefaultErrorBoundary from '../../shared/default-error-boundary';
 
 export function ShopFlippingProfitTable(): JSX.Element {
-  return (
-    <DefaultErrorBoundary>
-      <Suspense fallback={<div>Loading High Alch Profit Table...</div>}>
-        <LoadedTable />
-      </Suspense>
-    </DefaultErrorBoundary>
-  );
-}
-
-function LoadedTable(): JSX.Element {
   const tableData = useTableData();
 
   const columnHelper = createColumnHelper<TableRow>();

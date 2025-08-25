@@ -1,4 +1,4 @@
-import { JSX, Suspense, useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 import Table from '../../shared/table/table';
 import {
   ItemId,
@@ -14,19 +14,8 @@ import {
   allF2pPickupItems,
   allF2pWildernessItemPickups,
 } from './items';
-import DefaultErrorBoundary from '../../shared/default-error-boundary';
 
 export function PickupProfitTable(): JSX.Element {
-  return (
-    <DefaultErrorBoundary>
-      <Suspense fallback={<div>Loading High Alch Profit Table...</div>}>
-        <LoadedTable />
-      </Suspense>
-    </DefaultErrorBoundary>
-  );
-}
-
-function LoadedTable(): JSX.Element {
   const tableData = useTableData();
 
   const columnHelper = createColumnHelper<TableRow>();
