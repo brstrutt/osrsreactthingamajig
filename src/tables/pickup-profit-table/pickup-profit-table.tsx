@@ -16,7 +16,7 @@ import {
 } from './pickup-profit-table-items';
 import DefaultErrorBoundary from '../../shared/default-error-boundary';
 
-function PickupProfitTable(): JSX.Element {
+export function PickupProfitTable(): JSX.Element {
   return (
     <DefaultErrorBoundary>
       <Suspense fallback={<div>Loading High Alch Profit Table...</div>}>
@@ -87,5 +87,3 @@ function useTableData(): TableRow[] {
     [items],
   );
 }
-
-export default PickupProfitTable;

@@ -1,12 +1,12 @@
 import { Suspense, useMemo, type JSX } from 'react';
-import DefaultErrorBoundary from '../shared/default-error-boundary';
-import { OsrsItemData, useOsrsItems } from '../shared/use-osrs-items';
-import filterUndefined from '../shared/filter-undefined';
+import DefaultErrorBoundary from '../../shared/default-error-boundary';
+import { OsrsItemData, useOsrsItems } from '../../shared/use-osrs-items';
+import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
-import Table from '../shared/table/table';
-import { ItemId, OsrsItemComponent } from '../shared';
+import Table from '../../shared/table/table';
+import { ItemId, OsrsItemComponent } from '../../shared';
 
-function HighAlchProfitTable(): JSX.Element {
+export function HighAlchProfitTable(): JSX.Element {
   return (
     <DefaultErrorBoundary>
       <Suspense fallback={<div>Loading High Alch Profit Table...</div>}>
@@ -102,5 +102,3 @@ function useTableData(): TableRow[] {
     [items, natureRunePrice],
   );
 }
-
-export default HighAlchProfitTable;
