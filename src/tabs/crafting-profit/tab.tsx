@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { CraftingProfitTable } from "./table";
 import { OsrsItem } from "../../shared";
 
 export function CraftingProfitTab(): JSX.Element {
@@ -13,5 +14,6 @@ export function CraftingProfitTab(): JSX.Element {
       <OsrsItem itemName={'Ruby'} />
       <OsrsItem itemName={'Diamond'} />
     </div>
+    <CraftingProfitTable/>
   </>;
 }
