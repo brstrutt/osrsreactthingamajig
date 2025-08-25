@@ -32,6 +32,7 @@ function Table<Row, Value extends string | number>(props: {
     state: {
       sorting,
     },
+    autoResetPageIndex: false,
   });
 
   return (
