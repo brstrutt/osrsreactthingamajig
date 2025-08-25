@@ -3,7 +3,7 @@ import { OsrsItemData, useOsrsItems } from '../../shared/use-osrs-items';
 import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../../shared/table/table';
-import { ItemId, OsrsItem, OsrsItemComponent } from '../../shared';
+import { ItemId, OsrsItemComponent } from '../../shared';
 
 export function HighAlchProfitTable(): JSX.Element {
   const tableData = useTableData();
@@ -42,8 +42,7 @@ export function HighAlchProfitTable(): JSX.Element {
     [columnHelper],
   );
 
-  return <>
-    <OsrsItem itemName={'Nature rune'} />
+  return (
     <Table
       data={tableData}
       columns={columns}
@@ -55,7 +54,7 @@ export function HighAlchProfitTable(): JSX.Element {
         [],
       )}
     />
-  </>;
+  );
 }
 
 type TableRow = OsrsItemData & {

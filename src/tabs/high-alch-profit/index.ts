@@ -1,1 +1,1 @@
-export {HighAlchProfitTable as HighAlchProfitTab} from './table';
+export * from './tab';
