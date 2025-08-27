@@ -5,7 +5,17 @@ import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../../shared/table/table';
 import { ItemId, OsrsItemComponent } from '../../shared';
 
-export function HighAlchProfitTable(): JSX.Element {
+export type HighAlchProfitTableProps = {
+  sortBy: HighAlchProfitTableSort
+};
+
+export enum HighAlchProfitTableSort{
+  percentage,
+  absolute
+};
+
+export function HighAlchProfitTable(props: HighAlchProfitTableProps): JSX.Element {
+  const {sortBy} = props;
   const tableData = useTableData();
 
   const columnHelper = createColumnHelper<TableRow>();
@@ -42,17 +52,29 @@ export function HighAlchProfitTable(): JSX.Element {
     [columnHelper],
   );
 
+  const sorting = useMemo (
+    () => {
+      switch(sortBy) {
+        case HighAlchProfitTableSort.percentage:
+          return [
+            { id: 'precentageProfit', desc: true },
+            { id: 'profit', desc: true },
+          ];
+        case HighAlchProfitTableSort.absolute:
+          return [
+            { id: 'profit', desc: true },
+            { id: 'precentageProfit', desc: true },
+          ];
+      }
+    },
+    [sortBy],
+  );
+
   return (
     <Table
       data={tableData}
       columns={columns}
-      sorting={useMemo(
-        () => [
-          { id: 'precentageProfit', desc: true },
-          { id: 'profit', desc: true },
-        ],
-        [],
-      )}
+      sorting={sorting}
     />
   );
 }
