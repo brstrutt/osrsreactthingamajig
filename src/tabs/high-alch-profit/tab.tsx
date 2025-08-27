@@ -3,7 +3,7 @@ import { HighAlchProfitTable, HighAlchProfitTableSort } from "./table";
 import { OsrsItem } from "../../shared";
 
 export function HighAlchProfitTab(): JSX.Element {
-  const [sortByPercentage, setSortByPercentage] = useState<boolean>(true);
+  const [sortByPercentage, setSortByPercentage] = useState<boolean>(false);
 
 
 
