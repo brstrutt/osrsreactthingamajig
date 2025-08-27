@@ -13,6 +13,7 @@ export type OsrsItemData = {
   iconComponent: ReactNode;
   value: number;
   geValue?: number;
+  geVolume?: number;
   highAlch?: number;
 };
 
@@ -26,7 +27,7 @@ export function useOsrsItems(): OsrsItemData[] {
     combine: (results) => ({
       items: results[0].data,
       latestprices: results[1].data.data,
-      averagePrices: results[1].data.data,
+      averagePrices: results[2].data.data,
     }),
   });
 
@@ -35,8 +36,10 @@ export function useOsrsItems(): OsrsItemData[] {
       result.items
         .filter((item) => !item.members)
         .filter((item) => item.id in result.latestprices)
+        .filter((item) => item.id in result.averagePrices)
         .map((item) => {
           const prices = result.latestprices[item.id];
+          const averagePrices = result.averagePrices[item.id];
 
           let geValue = undefined;
           if (prices.high && prices.low) {
@@ -45,6 +48,15 @@ export function useOsrsItems(): OsrsItemData[] {
             geValue = prices.high;
           } else if (prices.low) {
             geValue = prices.low;
+          }
+
+          let geVolume = undefined;
+          if (averagePrices.highPriceVolume && averagePrices.lowPriceVolume) {
+            geVolume = averagePrices.highPriceVolume + averagePrices.lowPriceVolume;
+          } else if (averagePrices.highPriceVolume) {
+            geVolume = averagePrices.highPriceVolume;
+          } else if (averagePrices.lowPriceVolume) {
+            geVolume = averagePrices.lowPriceVolume;
           }
 
           return {
@@ -59,9 +71,10 @@ export function useOsrsItems(): OsrsItemData[] {
             ),
             value: item.value,
             geValue,
+            geVolume,
             highAlch: item.highalch,
           };
         }),
-    [result.items, result.latestprices],
+    [result.averagePrices, result.items, result.latestprices],
   );
 }

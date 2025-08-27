@@ -31,6 +31,10 @@ export function HighAlchProfitTable(props: HighAlchProfitTableProps): JSX.Elemen
         header: () => 'GE Value',
         maxSize: 90,
       }),
+      columnHelper.accessor('geVolume', {
+        header: () => 'GE Volume',
+        maxSize: 90,
+      }),
       columnHelper.accessor('cost', {
         header: () => 'Total Cost',
         maxSize: 90,
