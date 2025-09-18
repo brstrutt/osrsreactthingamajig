@@ -1,6 +1,12 @@
 import { Suspense, useMemo, type JSX } from 'react';
 import './App.css';
-import {CraftingProfitTab, GatheringProfitTab, HighAlchProfitTab, PickupProfitTab, ShopFlippingProfitTab} from './tabs';
+import {
+  CraftingProfitTab,
+  GatheringProfitTab,
+  HighAlchProfitTab,
+  PickupProfitTab,
+  ShopFlippingProfitTab,
+} from './tabs';
 import { useTabs } from './shared';
 import DefaultErrorBoundary from './shared/default-error-boundary';
 
@@ -34,7 +40,7 @@ function App(): JSX.Element {
           id: 'gathering',
           name: 'Gathering',
           content: <GatheringProfitTab />,
-        }
+        },
       ],
       [],
     ),
