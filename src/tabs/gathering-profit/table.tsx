@@ -10,7 +10,7 @@ import {
 import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import '../styles.css';
-import {allF2pGatheringItems} from './items';
+import { allF2pGatheringItems } from './items';
 
 export function GatheringProfitTable(): JSX.Element {
   const tableData = useTableData();
@@ -22,14 +22,14 @@ export function GatheringProfitTable(): JSX.Element {
         id: 'itemName',
         header: () => 'Item',
         maxSize: 200,
-        cell: (row) => (
-          <OsrsItemComponent
-            item={row.getValue()}
-          />
-        ),
+        cell: (row) => <OsrsItemComponent item={row.getValue()} />,
       }),
       columnHelper.accessor('geValue', {
         header: () => 'GE Value',
+        maxSize: 100,
+      }),
+      columnHelper.accessor('value', {
+        header: () => 'Item Value',
         maxSize: 100,
       }),
     ],
