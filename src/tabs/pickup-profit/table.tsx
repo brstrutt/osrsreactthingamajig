@@ -10,10 +10,7 @@ import {
 import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import '../styles.css';
-import {
-  allF2pPickupItems,
-  allF2pWildernessItemPickups,
-} from './items';
+import { allF2pPickupItems, allF2pWildernessItemPickups } from './items';
 
 export function PickupProfitTable(): JSX.Element {
   const tableData = useTableData();

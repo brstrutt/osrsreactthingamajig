@@ -1,1 +1,1 @@
-export {ShopFlippingProfitTable as ShopFlippingProfitTab} from './table';
+export { ShopFlippingProfitTable as ShopFlippingProfitTab } from './table';

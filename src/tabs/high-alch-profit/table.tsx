@@ -6,16 +6,18 @@ import Table from '../../shared/table/table';
 import { ItemId, OsrsItemComponent } from '../../shared';
 
 export type HighAlchProfitTableProps = {
-  sortBy: HighAlchProfitTableSort
+  sortBy: HighAlchProfitTableSort;
 };
 
-export enum HighAlchProfitTableSort{
+export enum HighAlchProfitTableSort {
   percentage,
-  absolute
-};
+  absolute,
+}
 
-export function HighAlchProfitTable(props: HighAlchProfitTableProps): JSX.Element {
-  const {sortBy} = props;
+export function HighAlchProfitTable(
+  props: HighAlchProfitTableProps,
+): JSX.Element {
+  const { sortBy } = props;
   const tableData = useTableData();
 
   const columnHelper = createColumnHelper<TableRow>();
@@ -56,31 +58,22 @@ export function HighAlchProfitTable(props: HighAlchProfitTableProps): JSX.Elemen
     [columnHelper],
   );
 
-  const sorting = useMemo (
-    () => {
-      switch(sortBy) {
-        case HighAlchProfitTableSort.percentage:
-          return [
-            { id: 'precentageProfit', desc: true },
-            { id: 'profit', desc: true },
-          ];
-        case HighAlchProfitTableSort.absolute:
-          return [
-            { id: 'profit', desc: true },
-            { id: 'precentageProfit', desc: true },
-          ];
-      }
-    },
-    [sortBy],
-  );
+  const sorting = useMemo(() => {
+    switch (sortBy) {
+      case HighAlchProfitTableSort.percentage:
+        return [
+          { id: 'precentageProfit', desc: true },
+          { id: 'profit', desc: true },
+        ];
+      case HighAlchProfitTableSort.absolute:
+        return [
+          { id: 'profit', desc: true },
+          { id: 'precentageProfit', desc: true },
+        ];
+    }
+  }, [sortBy]);
 
-  return (
-    <Table
-      data={tableData}
-      columns={columns}
-      sorting={sorting}
-    />
-  );
+  return <Table data={tableData} columns={columns} sorting={sorting} />;
 }
 
 type TableRow = OsrsItemData & {

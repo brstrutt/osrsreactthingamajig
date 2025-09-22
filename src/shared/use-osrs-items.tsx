@@ -52,7 +52,8 @@ export function useOsrsItems(): OsrsItemData[] {
 
           let geVolume = undefined;
           if (averagePrices.highPriceVolume && averagePrices.lowPriceVolume) {
-            geVolume = averagePrices.highPriceVolume + averagePrices.lowPriceVolume;
+            geVolume =
+              averagePrices.highPriceVolume + averagePrices.lowPriceVolume;
           } else if (averagePrices.highPriceVolume) {
             geVolume = averagePrices.highPriceVolume;
           } else if (averagePrices.lowPriceVolume) {

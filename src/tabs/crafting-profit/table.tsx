@@ -3,7 +3,12 @@ import { OsrsItemData, useOsrsItems } from '../../shared/use-osrs-items';
 import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../../shared/table/table';
-import { assertTypeExtendsType, ItemId, ItemName, OsrsItemComponent } from '../../shared';
+import {
+  assertTypeExtendsType,
+  ItemId,
+  ItemName,
+  OsrsItemComponent,
+} from '../../shared';
 import { GemName, jewellery } from './items';
 
 export function CraftingProfitTable(): JSX.Element {
@@ -38,12 +43,7 @@ export function CraftingProfitTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      sorting={useMemo(
-        () => [
-          { id: 'geProfitFromOre', desc: true },
-        ],
-        [],
-      )}
+      sorting={useMemo(() => [{ id: 'geProfitFromOre', desc: true }], [])}
     />
   );
 }
@@ -59,15 +59,17 @@ assertTypeExtendsType<GoldType, ItemName>();
 
 function useTableData(): TableRow[] {
   const items = useOsrsItems();
-  const jewelleryNames = useMemo(() => jewellery.map(item => item.name), []);
-  const materials = useMemo<Record<GemName | GoldType, OsrsItemData | undefined>>(
+  const jewelleryNames = useMemo(() => jewellery.map((item) => item.name), []);
+  const materials = useMemo<
+    Record<GemName | GoldType, OsrsItemData | undefined>
+  >(
     () => ({
       'Gold ore': items.find((item) => item.id === ItemId['Gold ore']),
       'Gold bar': items.find((item) => item.id === ItemId['Gold bar']),
-      'Sapphire': items.find((item) => item.id === ItemId['Sapphire']),
-      'Emerald': items.find((item) => item.id === ItemId['Emerald']),
-      'Ruby': items.find((item) => item.id === ItemId['Ruby']),
-      'Diamond': items.find((item) => item.id === ItemId['Diamond']),
+      Sapphire: items.find((item) => item.id === ItemId['Sapphire']),
+      Emerald: items.find((item) => item.id === ItemId['Emerald']),
+      Ruby: items.find((item) => item.id === ItemId['Ruby']),
+      Diamond: items.find((item) => item.id === ItemId['Diamond']),
     }),
     [items],
   );
@@ -77,28 +79,30 @@ function useTableData(): TableRow[] {
       items
         .filter(filterUndefined('highAlch'))
         .filter(filterUndefined('geValue'))
-        .filter((item) =>
-          jewelleryNames.includes(ItemId[item.id] as GemName),
-        )
-        .map(
-          (item) => {
-            const gem = jewellery.find(product => product.name === ItemId[item.id] as string)?.gem as GemName;
+        .filter((item) => jewelleryNames.includes(ItemId[item.id] as GemName))
+        .map((item) => {
+          const gem = jewellery.find(
+            (product) => product.name === (ItemId[item.id] as string),
+          )?.gem as GemName;
 
-            const value = item.geValue ?? item.value;
+          const value = item.geValue ?? item.value;
 
-            const oreCost = (materials['Gold ore']?.geValue ?? 300) + (materials[gem]?.geValue ?? 9999);
-            const barCost = (materials['Gold bar']?.geValue ?? 300) + (materials[gem]?.geValue ?? 9999);
+          const oreCost =
+            (materials['Gold ore']?.geValue ?? 300) +
+            (materials[gem]?.geValue ?? 9999);
+          const barCost =
+            (materials['Gold bar']?.geValue ?? 300) +
+            (materials[gem]?.geValue ?? 9999);
 
-            const geProfitFromOre = value - oreCost;
-            const geProfitFromBar = value - barCost;
-            return {
-              ...item,
-              value,
-              geProfitFromOre,
-              geProfitFromBar,
-            };
-          }
-        ),
+          const geProfitFromOre = value - oreCost;
+          const geProfitFromBar = value - barCost;
+          return {
+            ...item,
+            value,
+            geProfitFromOre,
+            geProfitFromBar,
+          };
+        }),
     [items, jewelleryNames, materials],
   );
 }

@@ -21,7 +21,7 @@ const woodcuttingItems: ItemName[] = [
   'Oak logs',
   'Willow logs',
   'Maple logs',
-  'Yew logs'
+  'Yew logs',
 ];
 
 const fishingItems: ItemName[] = [
@@ -37,7 +37,7 @@ const fishingItems: ItemName[] = [
   'Raw salmon',
   'Raw tuna',
   'Raw swordfish',
-  'Raw lobster'
+  'Raw lobster',
 ];
 
 const cookingItems: ItemName[] = [
@@ -53,7 +53,7 @@ const cookingItems: ItemName[] = [
   'Salmon',
   'Tuna',
   'Swordfish',
-  'Lobster'
+  'Lobster',
 ];
 
 export const allF2pGatheringItems: ItemName[] = [
