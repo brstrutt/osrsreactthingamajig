@@ -6,8 +6,9 @@ function Cell<T>(props: {
   column: Column<T, unknown>;
   title?: string;
   children: ReactNode;
+  onClick?: () => void;
 }): JSX.Element {
-  const { column, title = '', children } = props;
+  const { column, title = '', children, onClick } = props;
   return (
     <div
       className="osrsTableCell"
@@ -16,6 +17,7 @@ function Cell<T>(props: {
         maxWidth: column.columnDef.maxSize,
       }}
       title={title}
+      onClick={onClick}
     >
       {children}
     </div>
