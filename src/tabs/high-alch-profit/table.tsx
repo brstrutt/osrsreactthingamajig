@@ -55,13 +55,7 @@ export function HighAlchProfitTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      defaultSort={useMemo(
-        () => [
-          { id: 'profit', desc: true },
-          { id: 'precentageProfit', desc: true },
-        ],
-        [],
-      )}
+      defaultSort={useMemo(() => ({ id: 'profit', desc: true }), [])}
     />
   );
 }

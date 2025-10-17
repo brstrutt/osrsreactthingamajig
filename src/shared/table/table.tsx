@@ -9,6 +9,7 @@ import {
   HeaderGroup,
   Header,
   ColumnDef as OGColumnDef,
+  ColumnSort,
 } from '@tanstack/react-table';
 import { JSX, useCallback, useMemo, useState } from 'react';
 import './table.css';
@@ -22,11 +23,11 @@ type ColumnDef<Row> = OGColumnDef<Row, any> & { accessorKey?: string };
 function Table<Row>(props: {
   data: Row[];
   columns: ColumnDef<Row>[];
-  defaultSort: SortingState;
+  defaultSort: ColumnSort;
 }): JSX.Element {
   const { data, columns, defaultSort } = props;
 
-  const [sorting, setSorting] = useState<SortingState>(defaultSort);
+  const [sorting, setSorting] = useState<SortingState>([defaultSort]);
   const toggleSorting = useCallback(
     (columnId: string) => {
       const columnHasRequestedId = (column: ColumnDef<Row>) =>

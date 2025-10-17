@@ -43,7 +43,7 @@ export function CraftingProfitTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      defaultSort={useMemo(() => [{ id: 'geProfitFromOre', desc: true }], [])}
+      defaultSort={useMemo(() => ({ id: 'geProfitFromOre', desc: true }), [])}
     />
   );
 }

@@ -43,7 +43,7 @@ export function PickupProfitTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      defaultSort={useMemo(() => [{ id: 'geValue', desc: true }], [])}
+      defaultSort={useMemo(() => ({ id: 'geValue', desc: true }), [])}
     />
   );
 }
