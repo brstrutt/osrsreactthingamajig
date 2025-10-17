@@ -90,6 +90,7 @@ function Table<Row>(props: {
               key={headerGroup.id}
               headerGroup={headerGroup}
               toggleSorting={toggleSorting}
+              currentSorting={sorting}
             />
           ))}
         </thead>
@@ -118,8 +119,9 @@ function Table<Row>(props: {
 function TableHeader<Row>(props: {
   headerGroup: HeaderGroup<Row>;
   toggleSorting: (columnId: string) => void;
+  currentSorting: SortingState;
 }): JSX.Element {
-  const { headerGroup, toggleSorting } = props;
+  const { headerGroup, toggleSorting, currentSorting } = props;
   return (
     <tr>
       {headerGroup.headers.map((header) => (
@@ -127,6 +129,7 @@ function TableHeader<Row>(props: {
           key={header.id}
           header={header}
           toggleSorting={() => toggleSorting(header.id)}
+          currentSorting={currentSorting}
         />
       ))}
     </tr>
@@ -136,14 +139,30 @@ function TableHeader<Row>(props: {
 function TableHeaderCell<Row>(props: {
   header: Header<Row, unknown>;
   toggleSorting: () => void;
+  currentSorting: SortingState;
 }): JSX.Element {
-  const { header, toggleSorting } = props;
+  const { header, toggleSorting, currentSorting } = props;
+  const sortedDescending = useMemo(
+    () => currentSorting.find((sort) => sort.id === header.id)?.desc,
+    [currentSorting, header.id],
+  );
   return (
     <th onClick={toggleSorting}>
       {!header.isPlaceholder && (
-        <Cell column={header.column}>
-          {flexRender(header.column.columnDef.header, header.getContext())}
-        </Cell>
+        <>
+          <Cell column={header.column}>
+            {flexRender(header.column.columnDef.header, header.getContext())}
+            {sortedDescending !== undefined && (
+              <span>
+                {
+                  sortedDescending
+                    ? '\u{2193}' // Unicode down arrow
+                    : '\u{2191}' // Unicode up arrow
+                }
+              </span>
+            )}
+          </Cell>
+        </>
       )}
     </th>
   );
