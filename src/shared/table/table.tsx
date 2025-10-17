@@ -7,6 +7,8 @@ import {
   useReactTable,
   Table as TanstackTable,
   ColumnDef,
+  HeaderGroup,
+  Header,
 } from '@tanstack/react-table';
 import { JSX, useMemo } from 'react';
 import './table.css';
@@ -53,20 +55,7 @@ function Table<Row>(props: {
         </colgroup>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder ? null : (
-                    <Cell column={header.column}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </Cell>
-                  )}
-                </th>
-              ))}
-            </tr>
+            <TableHeader headerGroup={headerGroup} key={headerGroup.id} />
           ))}
         </thead>
         <tbody>
@@ -88,6 +77,34 @@ function Table<Row>(props: {
       </table>
       <TableFooter table={table} />
     </div>
+  );
+}
+
+function TableHeader<Row>(props: {
+  headerGroup: HeaderGroup<Row>;
+}): JSX.Element {
+  const { headerGroup } = props;
+  return (
+    <tr>
+      {headerGroup.headers.map((header) => (
+        <TableHeaderCell header={header} key={header.id} />
+      ))}
+    </tr>
+  );
+}
+
+function TableHeaderCell<Row>(props: {
+  header: Header<Row, unknown>;
+}): JSX.Element {
+  const { header } = props;
+  return (
+    <th>
+      {!header.isPlaceholder && (
+        <Cell column={header.column}>
+          {flexRender(header.column.columnDef.header, header.getContext())}
+        </Cell>
+      )}
+    </th>
   );
 }
 
