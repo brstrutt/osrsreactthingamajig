@@ -9,17 +9,15 @@ import {
   HeaderGroup,
   Header,
   ColumnDef as OGColumnDef,
-  AccessorKeyColumnDefBase,
 } from '@tanstack/react-table';
 import { JSX, useCallback, useMemo, useState } from 'react';
 import './table.css';
 import Cell from './table-cell';
 
-// We need to add the `AccessorKeyColumnDefBase` because a lot of our columns don't provide an `id`, they provide an `accessorKey` instead, which the `ColumnDef` doesn't account for
+// We need to add the `accessorKey` because a lot of our columns don't provide an `id`, they provide an `accessorKey` instead, which the `ColumnDef` doesn't account for.
 // Allow `any` here because that's what the library does. Also everything else I try draws a red squiggly at the callsite that only appears after restarting vscode.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ColumnDef<Row> = OGColumnDef<Row, any> &
-  Partial<AccessorKeyColumnDefBase<Row>>;
+type ColumnDef<Row> = OGColumnDef<Row, any> & { accessorKey?: string };
 
 function Table<Row>(props: {
   data: Row[];
