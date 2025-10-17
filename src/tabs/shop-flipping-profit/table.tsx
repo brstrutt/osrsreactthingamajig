@@ -49,7 +49,7 @@ export function ShopFlippingProfitTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      sorting={useMemo(() => [{ id: 'profit', desc: true }], [])}
+      defaultSort={useMemo(() => [{ id: 'profit', desc: true }], [])}
     />
   );
 }

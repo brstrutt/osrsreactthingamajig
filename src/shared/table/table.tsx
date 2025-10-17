@@ -10,7 +10,7 @@ import {
   HeaderGroup,
   Header,
 } from '@tanstack/react-table';
-import { JSX, useMemo } from 'react';
+import { JSX, useMemo, useState } from 'react';
 import './table.css';
 import Cell from './table-cell';
 
@@ -19,9 +19,12 @@ function Table<Row>(props: {
   // Allow `any` here because that's what the library does. Also everything else I try draws a red squiggly at the callsite that only appears after restarting vscode.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<Row, any>[];
-  sorting: SortingState;
+  defaultSort: SortingState;
 }): JSX.Element {
-  const { data, columns, sorting } = props;
+  const { data, columns, defaultSort } = props;
+
+  const [sorting] = useState<SortingState>(defaultSort);
+
   const table = useReactTable<Row>({
     data: data,
     columns,
