@@ -6,24 +6,52 @@ import {
   SortingState,
   useReactTable,
   Table as TanstackTable,
-  ColumnDef,
   HeaderGroup,
   Header,
+  ColumnDef as OGColumnDef,
+  AccessorKeyColumnDefBase,
 } from '@tanstack/react-table';
-import { JSX, useMemo, useState } from 'react';
+import { JSX, useCallback, useMemo, useState } from 'react';
 import './table.css';
 import Cell from './table-cell';
 
+// We need to add the `AccessorKeyColumnDefBase` because a lot of our columns don't provide an `id`, they provide an `accessorKey` instead, which the `ColumnDef` doesn't account for
+// Allow `any` here because that's what the library does. Also everything else I try draws a red squiggly at the callsite that only appears after restarting vscode.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ColumnDef<Row> = OGColumnDef<Row, any> &
+  Partial<AccessorKeyColumnDefBase<Row>>;
+
 function Table<Row>(props: {
   data: Row[];
-  // Allow `any` here because that's what the library does. Also everything else I try draws a red squiggly at the callsite that only appears after restarting vscode.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: ColumnDef<Row, any>[];
+  columns: ColumnDef<Row>[];
   defaultSort: SortingState;
 }): JSX.Element {
   const { data, columns, defaultSort } = props;
 
-  const [sorting] = useState<SortingState>(defaultSort);
+  const [sorting, setSorting] = useState<SortingState>(defaultSort);
+  const toggleSorting = useCallback(
+    (columnId: string) => {
+      const columnHasRequestedId = (column: ColumnDef<Row>) =>
+        column.id === columnId || column.accessorKey === columnId;
+      if (!columns.some(columnHasRequestedId)) {
+        console.log(
+          `Tried to sort by a column ID that doesn't exist: ${columnId}`,
+        );
+        console.log(`Current columns:`);
+        console.log(columns);
+        return;
+      }
+
+      const currentSort = sorting.find((sort) => sort.id === columnId) ?? {
+        desc: false,
+        id: columnId,
+      };
+
+      currentSort.desc = !currentSort.desc;
+      setSorting([currentSort]);
+    },
+    [columns, sorting],
+  );
 
   const table = useReactTable<Row>({
     data: data,
@@ -58,7 +86,11 @@ function Table<Row>(props: {
         </colgroup>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableHeader headerGroup={headerGroup} key={headerGroup.id} />
+            <TableHeader
+              key={headerGroup.id}
+              headerGroup={headerGroup}
+              toggleSorting={toggleSorting}
+            />
           ))}
         </thead>
         <tbody>
@@ -85,12 +117,17 @@ function Table<Row>(props: {
 
 function TableHeader<Row>(props: {
   headerGroup: HeaderGroup<Row>;
+  toggleSorting: (columnId: string) => void;
 }): JSX.Element {
-  const { headerGroup } = props;
+  const { headerGroup, toggleSorting } = props;
   return (
     <tr>
       {headerGroup.headers.map((header) => (
-        <TableHeaderCell header={header} key={header.id} />
+        <TableHeaderCell
+          key={header.id}
+          header={header}
+          toggleSorting={() => toggleSorting(header.id)}
+        />
       ))}
     </tr>
   );
@@ -98,10 +135,11 @@ function TableHeader<Row>(props: {
 
 function TableHeaderCell<Row>(props: {
   header: Header<Row, unknown>;
+  toggleSorting: () => void;
 }): JSX.Element {
-  const { header } = props;
+  const { header, toggleSorting } = props;
   return (
-    <th>
+    <th onClick={toggleSorting}>
       {!header.isPlaceholder && (
         <Cell column={header.column}>
           {flexRender(header.column.columnDef.header, header.getContext())}
