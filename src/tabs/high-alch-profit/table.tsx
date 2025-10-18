@@ -22,8 +22,8 @@ export function HighAlchProfitTable(): JSX.Element {
         maxSize: 150,
         cell: (row) => <OsrsItemComponent item={row.getValue()} />,
       }),
-      columnHelper.accessor('geValue', {
-        header: () => 'GE Value',
+      columnHelper.accessor('geValueLow', {
+        header: () => 'GE Value (low)',
         maxSize: 90,
       }),
       columnHelper.accessor('geVolume', {
@@ -80,7 +80,7 @@ function useTableData(): TableRow[] {
   return useMemo(
     () =>
       items.filter(filterUndefined('highAlch')).map((item) => {
-        const geValue = item.geValue ?? item.value;
+        const geValue = item.geValueLow ?? item.value;
         const cost = geValue + natureRunePrice;
         const profit = item.highAlch - cost;
         const precentageProfit = Math.round((profit / cost) * 100);

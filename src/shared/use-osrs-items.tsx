@@ -13,6 +13,8 @@ export type OsrsItemData = {
   iconComponent: ReactNode;
   value: number;
   geValue?: number;
+  geValueHigh?: number;
+  geValueLow?: number;
   geVolume?: number;
   highAlch?: number;
 };
@@ -72,6 +74,8 @@ export function useOsrsItems(): OsrsItemData[] {
             ),
             value: item.value,
             geValue,
+            geValueHigh: prices.high ?? undefined,
+            geValueLow: prices.low ?? undefined,
             geVolume,
             highAlch: item.highalch,
           };
