@@ -31,8 +31,8 @@ export function PickupProfitTable(): JSX.Element {
           />
         ),
       }),
-      columnHelper.accessor('geValue', {
-        header: () => 'GE Value',
+      columnHelper.accessor('geValueHigh', {
+        header: () => 'GE Value (High)',
         maxSize: 100,
       }),
     ],
@@ -43,7 +43,7 @@ export function PickupProfitTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      defaultSort={useMemo(() => ({ id: 'geValue', desc: true }), [])}
+      defaultSort={useMemo(() => ({ id: 'geValueHigh', desc: true }), [])}
     />
   );
 }
