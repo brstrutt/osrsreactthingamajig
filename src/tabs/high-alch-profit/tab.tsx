@@ -5,7 +5,7 @@ import { OsrsItem } from '../../shared';
 export function HighAlchProfitTab(): JSX.Element {
   return (
     <>
-      <OsrsItem itemName={'Nature rune'} />
+      <OsrsItem itemName={'Nature rune'} data={'geValueLow'} />
       <HighAlchProfitTable />
     </>
   );

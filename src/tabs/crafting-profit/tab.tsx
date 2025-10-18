@@ -6,20 +6,20 @@ export function CraftingProfitTab(): JSX.Element {
   return (
     <>
       <div style={{ display: 'flex' }}>
-        <OsrsItem itemName={'Gold ore'} />
-        <OsrsItem itemName={'Gold bar'} />
+        <OsrsItem itemName={'Gold ore'} data={'geValueLow'} />
+        <OsrsItem itemName={'Gold bar'} data={'geValueLow'} />
       </div>
       <div style={{ display: 'flex' }}>
-        <OsrsItem itemName={'Sapphire'} />
-        <OsrsItem itemName={'Emerald'} />
-        <OsrsItem itemName={'Ruby'} />
-        <OsrsItem itemName={'Diamond'} />
+        <OsrsItem itemName={'Sapphire'} data={'geValueLow'} />
+        <OsrsItem itemName={'Emerald'} data={'geValueLow'} />
+        <OsrsItem itemName={'Ruby'} data={'geValueLow'} />
+        <OsrsItem itemName={'Diamond'} data={'geValueLow'} />
       </div>
       <div style={{ display: 'flex' }}>
-        <OsrsItem itemName={'Uncut sapphire'} />
-        <OsrsItem itemName={'Uncut emerald'} />
-        <OsrsItem itemName={'Uncut ruby'} />
-        <OsrsItem itemName={'Uncut diamond'} />
+        <OsrsItem itemName={'Uncut sapphire'} data={'geValueLow'} />
+        <OsrsItem itemName={'Uncut emerald'} data={'geValueLow'} />
+        <OsrsItem itemName={'Uncut ruby'} data={'geValueLow'} />
+        <OsrsItem itemName={'Uncut diamond'} data={'geValueLow'} />
       </div>
       <CraftingProfitTable />
     </>

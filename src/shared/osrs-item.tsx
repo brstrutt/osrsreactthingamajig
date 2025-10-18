@@ -4,7 +4,10 @@ import DefaultErrorBoundary from './default-error-boundary';
 import './osrs-item.css';
 import { ItemId, ItemName } from './items';
 
-export function OsrsItem(props: { itemName: ItemName }): JSX.Element {
+export function OsrsItem(props: {
+  itemName: ItemName;
+  data?: keyof OsrsItemData;
+}): JSX.Element {
   const { itemName } = props;
 
   return (
@@ -18,8 +21,11 @@ export function OsrsItem(props: { itemName: ItemName }): JSX.Element {
   );
 }
 
-function Component(props: { itemName: ItemName }): JSX.Element {
-  const { itemName } = props;
+function Component(props: {
+  itemName: ItemName;
+  data?: keyof OsrsItemData;
+}): JSX.Element {
+  const { itemName, data } = props;
   const items = useOsrsItems();
   const itemData = useMemo(
     () => items.find((item) => item.id === ItemId[itemName]),
@@ -29,7 +35,11 @@ function Component(props: { itemName: ItemName }): JSX.Element {
   return (
     <div className="OsrsItem">
       {itemData ? (
-        <OsrsItemComponent item={itemData} data="geValue" postfix={'g'} />
+        <OsrsItemComponent
+          item={itemData}
+          data={data ?? 'geValue'}
+          postfix={'g'}
+        />
       ) : (
         'Item not found'
       )}
