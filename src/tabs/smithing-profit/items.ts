@@ -6,28 +6,30 @@ assertTypeExtendsType<Metal, ItemName>();
 export type SmithableItem = {
   name: ItemName;
   metal: Metal;
+  numberOfBars: number;
 };
 
 const weapons: SmithableItem[] = [
-  { name: 'Bronze dagger#(unp)', metal: 'Bronze bar' },
-  { name: 'Bronze sword', metal: 'Bronze bar' },
-  { name: 'Bronze scimitar', metal: 'Bronze bar' },
-  { name: 'Bronze longsword', metal: 'Bronze bar' },
-  { name: 'Bronze 2h sword', metal: 'Bronze bar' },
-  { name: 'Bronze battleaxe', metal: 'Bronze bar' },
-  { name: 'Bronze warhammer', metal: 'Bronze bar' },
-  { name: 'Bronze mace', metal: 'Bronze bar' },
+  { name: 'Bronze dagger#(unp)', metal: 'Bronze bar', numberOfBars: 1 },
+  { name: 'Bronze axe', metal: 'Bronze bar', numberOfBars: 1 },
+  { name: 'Bronze sword', metal: 'Bronze bar', numberOfBars: 1 },
+  { name: 'Bronze scimitar', metal: 'Bronze bar', numberOfBars: 2 },
+  { name: 'Bronze longsword', metal: 'Bronze bar', numberOfBars: 2 },
+  { name: 'Bronze 2h sword', metal: 'Bronze bar', numberOfBars: 3 },
+  { name: 'Bronze battleaxe', metal: 'Bronze bar', numberOfBars: 3 },
+  { name: 'Bronze warhammer', metal: 'Bronze bar', numberOfBars: 3 },
+  { name: 'Bronze mace', metal: 'Bronze bar', numberOfBars: 1  },
 ];
 
 const armour: SmithableItem[] = [
-  { name: 'Bronze med helm', metal: 'Bronze bar' },
-  { name: 'Bronze full helm', metal: 'Bronze bar' },
-  { name: 'Bronze chainbody', metal: 'Bronze bar' },
-  { name: 'Bronze platebody', metal: 'Bronze bar' },
-  { name: 'Bronze plateskirt', metal: 'Bronze bar' },
-  { name: 'Bronze platelegs', metal: 'Bronze bar' },
-  { name: 'Bronze sq shield', metal: 'Bronze bar' },
-  { name: 'Bronze kiteshield', metal: 'Bronze bar' },
+  { name: 'Bronze med helm', metal: 'Bronze bar', numberOfBars: 1 },
+  { name: 'Bronze full helm', metal: 'Bronze bar', numberOfBars: 2 },
+  { name: 'Bronze chainbody', metal: 'Bronze bar', numberOfBars: 3},
+  { name: 'Bronze platebody', metal: 'Bronze bar', numberOfBars: 5 },
+  { name: 'Bronze plateskirt', metal: 'Bronze bar', numberOfBars: 3 },
+  { name: 'Bronze platelegs', metal: 'Bronze bar', numberOfBars: 3 },
+  { name: 'Bronze sq shield', metal: 'Bronze bar', numberOfBars: 2 },
+  { name: 'Bronze kiteshield', metal: 'Bronze bar', numberOfBars: 3 },
 ];
 
 export const smithableItems = [...weapons, ...armour];

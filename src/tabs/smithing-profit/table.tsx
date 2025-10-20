@@ -4,7 +4,7 @@ import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../../shared/table/table';
 import { ItemId, OsrsItemComponent } from '../../shared';
-import { Metal, smithableItems } from './items';
+import { Metal, SmithableItem, smithableItems } from './items';
 
 export function SmithingProfitTable(): JSX.Element {
   const tableData = useTableData();
@@ -71,14 +71,17 @@ function useTableData(): TableRow[] {
         .filter(filterUndefined('geValue'))
         .filter((item) => smithableItemNames.includes(ItemId[item.id] as Metal))
         .map((item) => {
-          const metal = smithableItems.find(
+          const itemSmithingData = smithableItems.find(
             (product) => product.name === (ItemId[item.id] as string),
-          )?.metal as Metal;
+          );
 
           const value = item.geValue ?? item.value;
-          const barCost = materials[metal]?.geValue ?? 9999;
+          const barCost =
+            materials[(itemSmithingData as SmithableItem).metal]?.geValue ??
+            9999;
+          const totalCost = barCost * (itemSmithingData?.numberOfBars ?? 5);
 
-          const geProfitFromBar = value - barCost;
+          const geProfitFromBar = value - totalCost;
           return {
             ...item,
             value,
