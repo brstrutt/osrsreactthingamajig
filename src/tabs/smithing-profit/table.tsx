@@ -75,9 +75,9 @@ function useTableData(): TableRow[] {
             (product) => product.name === (ItemId[item.id] as string),
           );
 
-          const value = item.geValue ?? item.value;
+          const value = item.geValueHigh ?? item.value;
           const barCost =
-            materials[(itemSmithingData as SmithableItem).metal]?.geValue ??
+            materials[(itemSmithingData as SmithableItem).metal]?.geValueLow ??
             9999;
           const totalCost = barCost * (itemSmithingData?.numberOfBars ?? 5);
 
