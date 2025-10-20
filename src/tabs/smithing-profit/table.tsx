@@ -93,6 +93,11 @@ function useTableData(): TableRow[] {
     [items],
   );
 
+  const natureRunePrice: number = useMemo(() => {
+    const natureRune = items.find((item) => item.id === ItemId['Nature rune']);
+    return natureRune?.geValue ?? 180;
+  }, [items]);
+
   return useMemo(
     () =>
       items
@@ -125,10 +130,12 @@ function useTableData(): TableRow[] {
           const totalBarCost = barCost * (itemSmithingData?.numberOfBars ?? 5);
 
           const geProfitFromOre = value - totalOreCost;
-          const highAlchProfitFromOre = item.highAlch - totalOreCost;
+          const highAlchProfitFromOre =
+            item.highAlch - totalOreCost - natureRunePrice;
 
           const geProfitFromBar = value - totalBarCost;
-          const highAlchProfitFromBar = item.highAlch - totalBarCost;
+          const highAlchProfitFromBar =
+            item.highAlch - totalBarCost - natureRunePrice;
           return {
             ...item,
             value,
@@ -138,6 +145,12 @@ function useTableData(): TableRow[] {
             highAlchProfitFromBar,
           };
         }),
-    [items, smithableItemNames, currentMetalGeData, currentOreGeData],
+    [
+      items,
+      smithableItemNames,
+      currentMetalGeData,
+      natureRunePrice,
+      currentOreGeData,
+    ],
   );
 }
