@@ -9,8 +9,15 @@ import {
 } from './tabs';
 import { useTabs } from './shared';
 import DefaultErrorBoundary from './shared/default-error-boundary';
+import { SmithingProfitTab } from './tabs/smithing-profit';
 
-type Tabs = 'highalch' | 'pickup' | 'shop' | 'crafting' | 'gathering';
+type Tabs =
+  | 'highalch'
+  | 'pickup'
+  | 'shop'
+  | 'crafting'
+  | 'smithing'
+  | 'gathering';
 
 function App(): JSX.Element {
   const { tabButtons, tabContents } = useTabs<Tabs>(
@@ -35,6 +42,11 @@ function App(): JSX.Element {
           id: 'crafting',
           name: 'Crafting',
           content: <CraftingProfitTab />,
+        },
+        {
+          id: 'smithing',
+          name: 'Smithing',
+          content: <SmithingProfitTab />,
         },
         {
           id: 'gathering',
