@@ -19,6 +19,15 @@ const weapons: SmithableItem[] = [
   { name: 'Bronze battleaxe', metal: 'Bronze bar', numberOfBars: 3 },
   { name: 'Bronze warhammer', metal: 'Bronze bar', numberOfBars: 3 },
   { name: 'Bronze mace', metal: 'Bronze bar', numberOfBars: 1  },
+  { name: 'Iron dagger#(unp)', metal: 'Iron bar', numberOfBars: 1 },
+  { name: 'Iron axe', metal: 'Iron bar', numberOfBars: 1 },
+  { name: 'Iron sword', metal: 'Iron bar', numberOfBars: 1 },
+  { name: 'Iron scimitar', metal: 'Iron bar', numberOfBars: 2 },
+  { name: 'Iron longsword', metal: 'Iron bar', numberOfBars: 2 },
+  { name: 'Iron 2h sword', metal: 'Iron bar', numberOfBars: 3 },
+  { name: 'Iron battleaxe', metal: 'Iron bar', numberOfBars: 3 },
+  { name: 'Iron warhammer', metal: 'Iron bar', numberOfBars: 3 },
+  { name: 'Iron mace', metal: 'Iron bar', numberOfBars: 1  },
 ];
 
 const armour: SmithableItem[] = [
@@ -30,6 +39,14 @@ const armour: SmithableItem[] = [
   { name: 'Bronze platelegs', metal: 'Bronze bar', numberOfBars: 3 },
   { name: 'Bronze sq shield', metal: 'Bronze bar', numberOfBars: 2 },
   { name: 'Bronze kiteshield', metal: 'Bronze bar', numberOfBars: 3 },
+  { name: 'Iron med helm', metal: 'Iron bar', numberOfBars: 1 },
+  { name: 'Iron full helm', metal: 'Iron bar', numberOfBars: 2 },
+  { name: 'Iron chainbody', metal: 'Iron bar', numberOfBars: 3},
+  { name: 'Iron platebody', metal: 'Iron bar', numberOfBars: 5 },
+  { name: 'Iron plateskirt', metal: 'Iron bar', numberOfBars: 3 },
+  { name: 'Iron platelegs', metal: 'Iron bar', numberOfBars: 3 },
+  { name: 'Iron sq shield', metal: 'Iron bar', numberOfBars: 2 },
+  { name: 'Iron kiteshield', metal: 'Iron bar', numberOfBars: 3 },
 ];
 
 export const smithableItems = [...weapons, ...armour];
