@@ -34,7 +34,7 @@ export function SmithingProfitTable(): JSX.Element {
     <Table
       data={tableData}
       columns={columns}
-      defaultSort={useMemo(() => ({ id: 'geProfitFromOre', desc: true }), [])}
+      defaultSort={useMemo(() => ({ id: 'geProfitFromBar', desc: true }), [])}
     />
   );
 }
