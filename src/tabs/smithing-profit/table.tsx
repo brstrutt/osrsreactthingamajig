@@ -4,7 +4,7 @@ import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../../shared/table/table';
 import { ItemId, OsrsItemComponent } from '../../shared';
-import { Metal, Ore, SmithableItem, smithableItems } from './items';
+import { Metal, Ore, Resource, SmithableItem, smithableItems } from './items';
 
 export function SmithingProfitTable(): JSX.Element {
   const tableData = useTableData();
@@ -21,6 +21,14 @@ export function SmithingProfitTable(): JSX.Element {
       columnHelper.accessor('value', {
         header: () => 'Current Value',
         maxSize: 90,
+      }),
+      columnHelper.accessor('geProfitFromOre', {
+        header: () => 'GE Profit (ore)',
+        maxSize: 70,
+      }),
+      columnHelper.accessor('highAlchProfitFromOre', {
+        header: () => 'High Alch Profit (ore)',
+        maxSize: 70,
       }),
       columnHelper.accessor('geProfitFromBar', {
         header: () => 'GE Profit (bar)',
@@ -45,6 +53,8 @@ export function SmithingProfitTable(): JSX.Element {
 
 type TableRow = OsrsItemData & {
   value: number;
+  geProfitFromOre: number;
+  highAlchProfitFromOre: number;
   geProfitFromBar: number;
   highAlchProfitFromBar: number;
 };
@@ -68,6 +78,20 @@ function useTableData(): TableRow[] {
     }),
     [items],
   );
+  const currentOreGeData = useMemo<Record<Ore, OsrsItemData | undefined>>(
+    () => ({
+      'Copper ore': items.find((item) => item.id === ItemId['Copper ore']),
+      'Tin ore': items.find((item) => item.id === ItemId['Tin ore']),
+      'Iron ore': items.find((item) => item.id === ItemId['Iron ore']),
+      Coal: items.find((item) => item.id === ItemId['Coal']),
+      'Mithril ore': items.find((item) => item.id === ItemId['Mithril ore']),
+      'Adamantite ore': items.find(
+        (item) => item.id === ItemId['Adamantite ore'],
+      ),
+      'Runite ore': items.find((item) => item.id === ItemId['Runite ore']),
+    }),
+    [items],
+  );
 
   return useMemo(
     () =>
@@ -81,20 +105,39 @@ function useTableData(): TableRow[] {
           );
 
           const value = item.geValueHigh ?? item.value;
+
+          // Ore based calculations
+          const oreCost = itemSmithingData?.metal.ores
+            .map(
+              (ore: Resource) =>
+                (currentOreGeData[ore.name]?.geValueLow ?? 9999) * ore.amount,
+            ) // Turn the resources array into an array of cost values in GP (cost per ore * ores rerquired)
+            .reduce(
+              (totalCost: number, newCost: number) => totalCost + newCost,
+            );
+          const totalOreCost =
+            (oreCost ?? 9999) * (itemSmithingData?.numberOfBars ?? 5);
+
+          // Bar based calculations
           const barCost =
             currentMetalGeData[(itemSmithingData as SmithableItem).metal.name]
               ?.geValueLow ?? 9999;
-          const totalCost = barCost * (itemSmithingData?.numberOfBars ?? 5);
+          const totalBarCost = barCost * (itemSmithingData?.numberOfBars ?? 5);
 
-          const geProfitFromBar = value - totalCost;
-          const highAlchProfitFromBar = item.highAlch - totalCost;
+          const geProfitFromOre = value - totalOreCost;
+          const highAlchProfitFromOre = item.highAlch - totalOreCost;
+
+          const geProfitFromBar = value - totalBarCost;
+          const highAlchProfitFromBar = item.highAlch - totalBarCost;
           return {
             ...item,
             value,
+            geProfitFromOre,
+            highAlchProfitFromOre,
             geProfitFromBar,
             highAlchProfitFromBar,
           };
         }),
-    [items, smithableItemNames, currentMetalGeData],
+    [items, smithableItemNames, currentMetalGeData, currentOreGeData],
   );
 }
