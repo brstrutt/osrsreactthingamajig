@@ -26,6 +26,10 @@ export function SmithingProfitTable(): JSX.Element {
         header: () => 'GE Profit (bar)',
         maxSize: 70,
       }),
+      columnHelper.accessor('highAlchProfitFromBar', {
+        header: () => 'High Alch Profit (bar)',
+        maxSize: 70,
+      }),
     ],
     [columnHelper],
   );
@@ -42,6 +46,7 @@ export function SmithingProfitTable(): JSX.Element {
 type TableRow = OsrsItemData & {
   value: number;
   geProfitFromBar: number;
+  highAlchProfitFromBar: number;
 };
 
 function useTableData(): TableRow[] {
@@ -82,10 +87,12 @@ function useTableData(): TableRow[] {
           const totalCost = barCost * (itemSmithingData?.numberOfBars ?? 5);
 
           const geProfitFromBar = value - totalCost;
+          const highAlchProfitFromBar = item.highAlch - totalCost;
           return {
             ...item,
             value,
             geProfitFromBar,
+            highAlchProfitFromBar,
           };
         }),
     [items, smithableItemNames, materials],
