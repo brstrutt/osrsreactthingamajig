@@ -4,7 +4,7 @@ import filterUndefined from '../../shared/filter-undefined';
 import { createColumnHelper } from '@tanstack/react-table';
 import Table from '../../shared/table/table';
 import { ItemId, OsrsItemComponent } from '../../shared';
-import { Metal, SmithableItem, smithableItems } from './items';
+import { Metal, Ore, SmithableItem, smithableItems } from './items';
 
 export function SmithingProfitTable(): JSX.Element {
   const tableData = useTableData();
@@ -55,7 +55,7 @@ function useTableData(): TableRow[] {
     () => smithableItems.map((item) => item.name),
     [],
   );
-  const materials = useMemo<Record<Metal, OsrsItemData | undefined>>(
+  const currentMetalGeData = useMemo<Record<Metal, OsrsItemData | undefined>>(
     () => ({
       'Bronze bar': items.find((item) => item.id === ItemId['Bronze bar']),
       'Iron bar': items.find((item) => item.id === ItemId['Iron bar']),
@@ -82,8 +82,8 @@ function useTableData(): TableRow[] {
 
           const value = item.geValueHigh ?? item.value;
           const barCost =
-            materials[(itemSmithingData as SmithableItem).metal]?.geValueLow ??
-            9999;
+            currentMetalGeData[(itemSmithingData as SmithableItem).metal.name]
+              ?.geValueLow ?? 9999;
           const totalCost = barCost * (itemSmithingData?.numberOfBars ?? 5);
 
           const geProfitFromBar = value - totalCost;
@@ -95,6 +95,6 @@ function useTableData(): TableRow[] {
             highAlchProfitFromBar,
           };
         }),
-    [items, smithableItemNames, materials],
+    [items, smithableItemNames, currentMetalGeData],
   );
 }
