@@ -1,24 +1,33 @@
 import { assertTypeExtendsType, ItemName } from '../../shared';
 
-export type GemName = 'Sapphire' | 'Emerald' | 'Ruby' | 'Diamond';
-assertTypeExtendsType<GemName, ItemName>();
+export type Metal = 'Bronze bar' | 'Iron bar' | 'Steel bar' | 'Mithril bar' | 'Adamantite bar' | 'Runite bar';
+assertTypeExtendsType<Metal, ItemName>();
 
-export type CraftableJewellery = {
+export type SmithableItem = {
   name: ItemName;
-  gem: GemName;
+  metal: Metal;
 };
 
-export const jewellery: CraftableJewellery[] = [
-  { name: 'Sapphire ring', gem: 'Sapphire' },
-  { name: 'Sapphire necklace', gem: 'Sapphire' },
-  { name: 'Sapphire amulet (u)', gem: 'Sapphire' },
-  { name: 'Emerald ring', gem: 'Emerald' },
-  { name: 'Emerald necklace', gem: 'Emerald' },
-  { name: 'Emerald amulet (u)', gem: 'Emerald' },
-  { name: 'Ruby ring', gem: 'Ruby' },
-  { name: 'Ruby necklace', gem: 'Ruby' },
-  { name: 'Ruby amulet (u)', gem: 'Ruby' },
-  { name: 'Diamond ring', gem: 'Diamond' },
-  { name: 'Diamond necklace', gem: 'Diamond' },
-  { name: 'Diamond amulet (u)', gem: 'Diamond' },
+const weapons: SmithableItem[] = [
+  { name: 'Bronze dagger#(unp)', metal: 'Bronze bar' },
+  { name: 'Bronze sword', metal: 'Bronze bar' },
+  { name: 'Bronze scimitar', metal: 'Bronze bar' },
+  { name: 'Bronze longsword', metal: 'Bronze bar' },
+  { name: 'Bronze 2h sword', metal: 'Bronze bar' },
+  { name: 'Bronze battleaxe', metal: 'Bronze bar' },
+  { name: 'Bronze warhammer', metal: 'Bronze bar' },
+  { name: 'Bronze mace', metal: 'Bronze bar' },
 ];
+
+const armour: SmithableItem[] = [
+  { name: 'Bronze med helm', metal: 'Bronze bar' },
+  { name: 'Bronze full helm', metal: 'Bronze bar' },
+  { name: 'Bronze chainbody', metal: 'Bronze bar' },
+  { name: 'Bronze platebody', metal: 'Bronze bar' },
+  { name: 'Bronze plateskirt', metal: 'Bronze bar' },
+  { name: 'Bronze platelegs', metal: 'Bronze bar' },
+  { name: 'Bronze sq shield', metal: 'Bronze bar' },
+  { name: 'Bronze kiteshield', metal: 'Bronze bar' },
+];
+
+export const smithableItems = [...weapons, ...armour];
