@@ -205,4 +205,13 @@ const armour: SmithableItem[] = [
   { name: 'Rune kiteshield', metal: runiteBar, numberOfBars: 3 },
 ];
 
-export const smithableItems = [...weapons, ...armour];
+const bars: SmithableItem[] = [
+  { name: 'Bronze bar', metal: bronzeBar, numberOfBars: 1 },
+  { name: 'Iron bar', metal: ironBar, numberOfBars: 1 },
+  { name: 'Steel bar', metal: steelBar, numberOfBars: 1 },
+  { name: 'Mithril bar', metal: mithrilBar, numberOfBars: 1 },
+  { name: 'Adamantite bar', metal: adamantiteBar, numberOfBars: 1 },
+  { name: 'Runite bar', metal: runiteBar, numberOfBars: 1 },
+]
+
+export const smithableItems = [...weapons, ...armour, ...bars];
