@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { ReactNode } from 'react';
 import {
   useOsrs1hApiQueryOptions,
   useOsrsLatestApiQueryOptions,
@@ -33,53 +33,48 @@ export function useOsrsItems(): OsrsItemData[] {
     }),
   });
 
-  return useMemo(
-    () =>
-      result.items
-        .filter((item) => !item.members)
-        .filter((item) => item.id in result.latestprices)
-        .filter((item) => item.id in result.averagePrices)
-        .map((item) => {
-          const prices = result.latestprices[item.id];
-          const averagePrices = result.averagePrices[item.id];
+  return result.items
+    .filter((item) => !item.members)
+    .filter((item) => item.id in result.latestprices)
+    .filter((item) => item.id in result.averagePrices)
+    .map((item) => {
+      const prices = result.latestprices[item.id];
+      const averagePrices = result.averagePrices[item.id];
 
-          let geValue = undefined;
-          if (prices.high && prices.low) {
-            geValue = (prices.high + prices.low) / 2;
-          } else if (prices.high) {
-            geValue = prices.high;
-          } else if (prices.low) {
-            geValue = prices.low;
-          }
+      let geValue = undefined;
+      if (prices.high && prices.low) {
+        geValue = (prices.high + prices.low) / 2;
+      } else if (prices.high) {
+        geValue = prices.high;
+      } else if (prices.low) {
+        geValue = prices.low;
+      }
 
-          let geVolume = undefined;
-          if (averagePrices.highPriceVolume && averagePrices.lowPriceVolume) {
-            geVolume =
-              averagePrices.highPriceVolume + averagePrices.lowPriceVolume;
-          } else if (averagePrices.highPriceVolume) {
-            geVolume = averagePrices.highPriceVolume;
-          } else if (averagePrices.lowPriceVolume) {
-            geVolume = averagePrices.lowPriceVolume;
-          }
+      let geVolume = undefined;
+      if (averagePrices.highPriceVolume && averagePrices.lowPriceVolume) {
+        geVolume = averagePrices.highPriceVolume + averagePrices.lowPriceVolume;
+      } else if (averagePrices.highPriceVolume) {
+        geVolume = averagePrices.highPriceVolume;
+      } else if (averagePrices.lowPriceVolume) {
+        geVolume = averagePrices.lowPriceVolume;
+      }
 
-          return {
-            name: item.name,
-            id: item.id,
-            iconComponent: (
-              <span className="osrsItemIconWrapper">
-                <img
-                  src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}
-                />
-              </span>
-            ),
-            value: item.value,
-            geValue,
-            geValueHigh: prices.high ?? undefined,
-            geValueLow: prices.low ?? undefined,
-            geVolume,
-            highAlch: item.highalch,
-          };
-        }),
-    [result.averagePrices, result.items, result.latestprices],
-  );
+      return {
+        name: item.name,
+        id: item.id,
+        iconComponent: (
+          <span className="osrsItemIconWrapper">
+            <img
+              src={`https://oldschool.runescape.wiki/images/${item.icon.replaceAll(' ', '_')}`}
+            />
+          </span>
+        ),
+        value: item.value,
+        geValue,
+        geValueHigh: prices.high ?? undefined,
+        geValueLow: prices.low ?? undefined,
+        geVolume,
+        highAlch: item.highalch,
+      };
+    });
 }

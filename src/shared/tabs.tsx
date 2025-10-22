@@ -1,11 +1,4 @@
-import {
-  Dispatch,
-  JSX,
-  ReactNode,
-  SetStateAction,
-  useMemo,
-  useState,
-} from 'react';
+import { Dispatch, JSX, ReactNode, SetStateAction, useState } from 'react';
 
 export type TabDefinition<Tab> = {
   id: Tab;
@@ -21,24 +14,21 @@ export type Tabs = {
 export function useTabs<Tab extends string>(tabs: TabDefinition<Tab>[]): Tabs {
   const [currentTab, setCurrentTab] = useState<Tab>(tabs[0].id);
 
-  return useMemo(
-    () => ({
-      tabButtons: tabs.map((tab) => (
-        <TabButton
-          key={tab.id}
-          tab={tab.id}
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-        >
-          {tab.name}
-        </TabButton>
-      )),
-      tabContents: tabs.map((tab) => (
-        <div key={tab.id}>{currentTab === tab.id && tab.content}</div>
-      )),
-    }),
-    [tabs, currentTab, setCurrentTab],
-  );
+  return {
+    tabButtons: tabs.map((tab) => (
+      <TabButton
+        key={tab.id}
+        tab={tab.id}
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+      >
+        {tab.name}
+      </TabButton>
+    )),
+    tabContents: tabs.map((tab) => (
+      <div key={tab.id}>{currentTab === tab.id && tab.content}</div>
+    )),
+  };
 }
 
 function TabButton<Tab extends string>(props: {

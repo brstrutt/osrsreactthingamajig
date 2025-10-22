@@ -3,7 +3,7 @@ import {
   UseSuspenseQueryOptions,
   UseSuspenseQueryResult,
 } from '@tanstack/react-query';
-import { useOsrsApiQueryOptions } from './osrs';
+import { getOsrsApiQueryOptions } from './osrs';
 
 type ItemPriceData = {
   high: number | null;
@@ -26,5 +26,5 @@ export function useOsrsLatestApiQueryOptions(): UseSuspenseQueryOptions<
   Response,
   unknown
 > {
-  return useOsrsApiQueryOptions('latest');
+  return getOsrsApiQueryOptions('latest');
 }
