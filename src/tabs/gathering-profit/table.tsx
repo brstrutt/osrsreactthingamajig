@@ -1,4 +1,4 @@
-import { JSX, useMemo } from 'react';
+import { JSX } from 'react';
 import Table from '../../shared/table/table';
 import {
   ItemId,
@@ -16,31 +16,28 @@ export function GatheringProfitTable(): JSX.Element {
   const tableData = useTableData();
 
   const columnHelper = createColumnHelper<OsrsItemData>();
-  const columns = useMemo(
-    () => [
-      columnHelper.accessor((row) => row, {
-        id: 'itemName',
-        header: () => 'Item',
-        maxSize: 200,
-        cell: (row) => <OsrsItemComponent item={row.getValue()} />,
-      }),
-      columnHelper.accessor('geValue', {
-        header: () => 'GE Value',
-        maxSize: 100,
-      }),
-      columnHelper.accessor('value', {
-        header: () => 'Item Value',
-        maxSize: 100,
-      }),
-    ],
-    [columnHelper],
-  );
+  const columns = [
+    columnHelper.accessor((row) => row, {
+      id: 'itemName',
+      header: () => 'Item',
+      maxSize: 200,
+      cell: (row) => <OsrsItemComponent item={row.getValue()} />,
+    }),
+    columnHelper.accessor('geValue', {
+      header: () => 'GE Value',
+      maxSize: 100,
+    }),
+    columnHelper.accessor('value', {
+      header: () => 'Item Value',
+      maxSize: 100,
+    }),
+  ];
 
   return (
     <Table
       data={tableData}
       columns={columns}
-      defaultSort={useMemo(() => ({ id: 'geValue', desc: true }), [])}
+      defaultSort={{ id: 'geValue', desc: true }}
     />
   );
 }
@@ -48,13 +45,9 @@ export function GatheringProfitTable(): JSX.Element {
 function useTableData(): OsrsItemData[] {
   const items = useOsrsItems();
 
-  return useMemo(
-    () =>
-      items
-        .filter(filterUndefined('geValue'))
-        .filter((item) =>
-          allF2pGatheringItems.includes(ItemId[item.id] as ItemName),
-        ),
-    [items],
-  );
+  return items
+    .filter(filterUndefined('geValue'))
+    .filter((item) =>
+      allF2pGatheringItems.includes(ItemId[item.id] as ItemName),
+    );
 }

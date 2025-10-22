@@ -1,4 +1,4 @@
-import { Suspense, useMemo, type JSX } from 'react';
+import { Suspense, type JSX } from 'react';
 import './App.css';
 import {
   CraftingProfitTab,
@@ -20,43 +20,38 @@ type Tabs =
   | 'gathering';
 
 function App(): JSX.Element {
-  const { tabButtons, tabContents } = useTabs<Tabs>(
-    useMemo(
-      () => [
-        {
-          id: 'highalch',
-          name: 'High Alch',
-          content: <HighAlchProfitTab />,
-        },
-        {
-          id: 'pickup',
-          name: 'Pickup',
-          content: <PickupProfitTab />,
-        },
-        {
-          id: 'shop',
-          name: 'Shop',
-          content: <ShopFlippingProfitTab />,
-        },
-        {
-          id: 'crafting',
-          name: 'Crafting',
-          content: <CraftingProfitTab />,
-        },
-        {
-          id: 'smithing',
-          name: 'Smithing',
-          content: <SmithingProfitTab />,
-        },
-        {
-          id: 'gathering',
-          name: 'Gathering',
-          content: <GatheringProfitTab />,
-        },
-      ],
-      [],
-    ),
-  );
+  const { tabButtons, tabContents } = useTabs<Tabs>([
+    {
+      id: 'highalch',
+      name: 'High Alch',
+      content: <HighAlchProfitTab />,
+    },
+    {
+      id: 'pickup',
+      name: 'Pickup',
+      content: <PickupProfitTab />,
+    },
+    {
+      id: 'shop',
+      name: 'Shop',
+      content: <ShopFlippingProfitTab />,
+    },
+    {
+      id: 'crafting',
+      name: 'Crafting',
+      content: <CraftingProfitTab />,
+    },
+    {
+      id: 'smithing',
+      name: 'Smithing',
+      content: <SmithingProfitTab />,
+    },
+    {
+      id: 'gathering',
+      name: 'Gathering',
+      content: <GatheringProfitTab />,
+    },
+  ]);
 
   return (
     <>

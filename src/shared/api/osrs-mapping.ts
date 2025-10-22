@@ -3,7 +3,7 @@ import {
   UseSuspenseQueryOptions,
   UseSuspenseQueryResult,
 } from '@tanstack/react-query';
-import { useOsrsApiQueryOptions } from './osrs';
+import { getOsrsApiQueryOptions } from './osrs';
 
 export type ItemDetails = {
   id: number;
@@ -28,5 +28,5 @@ export function useOsrsMappingApiQueryOptions(): UseSuspenseQueryOptions<
   ItemDetails[],
   unknown
 > {
-  return useOsrsApiQueryOptions('mapping');
+  return getOsrsApiQueryOptions('mapping');
 }

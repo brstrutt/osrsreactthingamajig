@@ -3,8 +3,7 @@ import {
   UseSuspenseQueryOptions,
   UseSuspenseQueryResult,
 } from '@tanstack/react-query';
-import { useOsrsApiQueryOptions } from './osrs';
-import { useMemo } from 'react';
+import { getOsrsApiQueryOptions } from './osrs';
 
 export type AverageItemPriceData = {
   avgHighPrice: number | null;
@@ -28,21 +27,17 @@ export function useOsrs5mApi(
 export function useOsrs5mApiQueryOptions(
   periodStartTime?: Date,
 ): UseSuspenseQueryOptions<Response, unknown> {
-  const timestampUnixSeconds = useMemo(() => {
-    if (periodStartTime === undefined) return undefined;
+  let timestampUnixSeconds = undefined;
+  if (periodStartTime !== undefined) {
     const unixSeconds = periodStartTime.getTime() / 1000;
     const roundedToFiveMinutes = Math.round(unixSeconds / 300) * 300;
-    return roundedToFiveMinutes;
-  }, [periodStartTime]);
+    timestampUnixSeconds = roundedToFiveMinutes;
+  }
 
-  const queryParams = useMemo(
-    () =>
-      timestampUnixSeconds === undefined
+  const queryParams = timestampUnixSeconds === undefined
         ? undefined
-        : new URLSearchParams({ timestamp: timestampUnixSeconds.toString() }),
-    [timestampUnixSeconds],
-  );
-  return useOsrsApiQueryOptions('5m', queryParams);
+        : new URLSearchParams({ timestamp: timestampUnixSeconds.toString() });
+  return getOsrsApiQueryOptions('5m', queryParams);
 }
 
 export function useOsrs1hApi(
@@ -54,18 +49,14 @@ export function useOsrs1hApi(
 export function useOsrs1hApiQueryOptions(
   periodStartTime?: Date,
 ): UseSuspenseQueryOptions<Response, unknown> {
-  const timestampUnixSeconds = useMemo(() => {
-    if (periodStartTime === undefined) return undefined;
+  let timestampUnixSeconds = undefined;
+  if (periodStartTime !== undefined) {
     periodStartTime.setMinutes(0, 0, 0); // Drop anything smaller than hours. API rejects timestamps that aren't on the hour
-    return periodStartTime.getTime() / 1000;
-  }, [periodStartTime]);
+    timestampUnixSeconds = periodStartTime.getTime() / 1000;
+  }
 
-  const queryParams = useMemo(
-    () =>
-      timestampUnixSeconds === undefined
+  const queryParams = timestampUnixSeconds === undefined
         ? undefined
-        : new URLSearchParams({ timestamp: timestampUnixSeconds.toString() }),
-    [timestampUnixSeconds],
-  );
-  return useOsrsApiQueryOptions('1h', queryParams);
+        : new URLSearchParams({ timestamp: timestampUnixSeconds.toString() });
+  return getOsrsApiQueryOptions('1h', queryParams);
 }

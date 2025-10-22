@@ -1,4 +1,4 @@
-import { JSX, Suspense, useMemo } from 'react';
+import { JSX, Suspense } from 'react';
 import { OsrsItemData, useOsrsItems } from './use-osrs-items';
 import DefaultErrorBoundary from './default-error-boundary';
 import './osrs-item.css';
@@ -27,10 +27,7 @@ function Component(props: {
 }): JSX.Element {
   const { itemName, data } = props;
   const items = useOsrsItems();
-  const itemData = useMemo(
-    () => items.find((item) => item.id === ItemId[itemName]),
-    [items, itemName],
-  );
+  const itemData = items.find((item) => item.id === ItemId[itemName]);
 
   return (
     <div className="OsrsItem">

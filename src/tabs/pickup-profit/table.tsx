@@ -1,4 +1,4 @@
-import { JSX, useMemo } from 'react';
+import { JSX } from 'react';
 import Table from '../../shared/table/table';
 import {
   ItemId,
@@ -16,34 +16,31 @@ export function PickupProfitTable(): JSX.Element {
   const tableData = useTableData();
 
   const columnHelper = createColumnHelper<TableRow>();
-  const columns = useMemo(
-    () => [
-      columnHelper.accessor((row) => row, {
-        id: 'itemName',
-        header: () => 'Item',
-        maxSize: 200,
-        cell: (row) => (
-          <OsrsItemComponent
-            item={row.getValue()}
-            className={
-              row.getValue().location === 'dangerous' ? 'dangerous' : undefined
-            }
-          />
-        ),
-      }),
-      columnHelper.accessor('geValueHigh', {
-        header: () => 'GE Value (High)',
-        maxSize: 100,
-      }),
-    ],
-    [columnHelper],
-  );
+  const columns = [
+    columnHelper.accessor((row) => row, {
+      id: 'itemName',
+      header: () => 'Item',
+      maxSize: 200,
+      cell: (row) => (
+        <OsrsItemComponent
+          item={row.getValue()}
+          className={
+            row.getValue().location === 'dangerous' ? 'dangerous' : undefined
+          }
+        />
+      ),
+    }),
+    columnHelper.accessor('geValueHigh', {
+      header: () => 'GE Value (High)',
+      maxSize: 100,
+    }),
+  ];
 
   return (
     <Table
       data={tableData}
       columns={columns}
-      defaultSort={useMemo(() => ({ id: 'geValueHigh', desc: true }), [])}
+      defaultSort={{ id: 'geValueHigh', desc: true }}
     />
   );
 }
@@ -55,21 +52,15 @@ type TableRow = OsrsItemData & {
 function useTableData(): TableRow[] {
   const items = useOsrsItems();
 
-  return useMemo(
-    () =>
-      items
-        .filter(filterUndefined('geValue'))
-        .filter((item) =>
-          allF2pPickupItems.includes(ItemId[item.id] as ItemName),
-        )
-        .map((item) => ({
-          ...item,
-          location: allF2pWildernessItemPickups.includes(
-            ItemId[item.id] as ItemName,
-          )
-            ? 'dangerous'
-            : 'safe',
-        })),
-    [items],
-  );
+  return items
+    .filter(filterUndefined('geValue'))
+    .filter((item) => allF2pPickupItems.includes(ItemId[item.id] as ItemName))
+    .map((item) => ({
+      ...item,
+      location: allF2pWildernessItemPickups.includes(
+        ItemId[item.id] as ItemName,
+      )
+        ? 'dangerous'
+        : 'safe',
+    }));
 }
