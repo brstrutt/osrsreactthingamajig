@@ -11,7 +11,7 @@ import {
   ColumnDef as OGColumnDef,
   ColumnSort,
 } from '@tanstack/react-table';
-import { JSX, useCallback, useMemo, useState } from 'react';
+import { JSX, useState } from 'react';
 import './table.css';
 import Cell from './table-cell';
 
@@ -28,29 +28,26 @@ function Table<Row>(props: {
   const { data, columns, defaultSort } = props;
 
   const [sorting, setSorting] = useState<SortingState>([defaultSort]);
-  const toggleSorting = useCallback(
-    (columnId: string) => {
-      const columnHasRequestedId = (column: ColumnDef<Row>) =>
-        column.id === columnId || column.accessorKey === columnId;
-      if (!columns.some(columnHasRequestedId)) {
-        console.log(
-          `Tried to sort by a column ID that doesn't exist: ${columnId}`,
-        );
-        console.log(`Current columns:`);
-        console.log(columns);
-        return;
-      }
+  const toggleSorting = (columnId: string) => {
+    const columnHasRequestedId = (column: ColumnDef<Row>) =>
+      column.id === columnId || column.accessorKey === columnId;
+    if (!columns.some(columnHasRequestedId)) {
+      console.log(
+        `Tried to sort by a column ID that doesn't exist: ${columnId}`,
+      );
+      console.log(`Current columns:`);
+      console.log(columns);
+      return;
+    }
 
-      const currentSort = sorting.find((sort) => sort.id === columnId) ?? {
-        desc: false,
-        id: columnId,
-      };
+    const currentSort = sorting.find((sort) => sort.id === columnId) ?? {
+      desc: false,
+      id: columnId,
+    };
 
-      currentSort.desc = !currentSort.desc;
-      setSorting([currentSort]);
-    },
-    [columns, sorting],
-  );
+    currentSort.desc = !currentSort.desc;
+    setSorting([currentSort]);
+  };
 
   const table = useReactTable<Row>({
     data: data,
@@ -110,7 +107,13 @@ function Table<Row>(props: {
           ))}
         </tbody>
       </table>
-      <TableFooter table={table} />
+      <TableFooter
+        table={table}
+        currentPageIndex={table.getState().pagination.pageIndex}
+        canNavigateForward={table.getCanNextPage()}
+        canNavigateBackward={table.getCanPreviousPage()}
+        numberOfRowsShown={table.getRowModel().rows.length}
+      />
     </div>
   );
 }
@@ -141,10 +144,9 @@ function TableHeaderCell<Row>(props: {
   currentSorting: SortingState;
 }): JSX.Element {
   const { header, toggleSorting, currentSorting } = props;
-  const sortedDescending = useMemo(
-    () => currentSorting.find((sort) => sort.id === header.id)?.desc,
-    [currentSorting, header.id],
-  );
+  const sortedDescending = currentSorting.find(
+    (sort) => sort.id === header.id,
+  )?.desc;
   return (
     <th onClick={toggleSorting}>
       {!header.isPlaceholder && (
@@ -167,30 +169,28 @@ function TableHeaderCell<Row>(props: {
   );
 }
 
-function TableFooter<Row>(props: { table: TanstackTable<Row> }): JSX.Element {
-  const { table } = props;
+function TableFooter<Row>(props: {
+  table: TanstackTable<Row>;
+  currentPageIndex: number;
+  canNavigateForward: boolean;
+  canNavigateBackward: boolean;
+  numberOfRowsShown: number;
+}): JSX.Element {
+  const {
+    table,
+    currentPageIndex,
+    canNavigateForward,
+    canNavigateBackward,
+    numberOfRowsShown,
+  } = props;
 
-  const currentPageIndex = table.getState().pagination.pageIndex;
+  const totalRowcount = table.getRowCount();
+  const rowsPerPage = table.getState().pagination.pageSize;
+  const numberOfPages = table.getPageCount();
 
-  const totalRowcount = useMemo(() => table.getRowCount(), [table]);
-  const numberOfRowsShown = useMemo(
-    () => table.getRowModel().rows.length,
-    [table],
-  );
-  const rowsPerPage = useMemo(
-    () => table.getState().pagination.pageSize,
-    [table],
-  );
-  const numberOfPages = useMemo(() => table.getPageCount(), [table]);
-
-  const currentPageFirstRowIndex = useMemo(
-    () => currentPageIndex * rowsPerPage,
-    [currentPageIndex, rowsPerPage],
-  );
-  const currentPageLastRowIndex = useMemo(
-    () => currentPageFirstRowIndex + numberOfRowsShown - 1,
-    [currentPageFirstRowIndex, numberOfRowsShown],
-  );
+  const currentPageFirstRowIndex = currentPageIndex * rowsPerPage;
+  const currentPageLastRowIndex =
+    currentPageFirstRowIndex + numberOfRowsShown - 1;
 
   return (
     <div className="tableFooter">
@@ -199,23 +199,17 @@ function TableFooter<Row>(props: { table: TanstackTable<Row> }): JSX.Element {
         {totalRowcount}
       </span>
       <span>
-        <button
-          onClick={table.firstPage}
-          disabled={!table.getCanPreviousPage()}
-        >
+        <button onClick={table.firstPage} disabled={!canNavigateBackward}>
           1
         </button>
-        <button
-          onClick={table.previousPage}
-          disabled={!table.getCanPreviousPage()}
-        >
+        <button onClick={table.previousPage} disabled={!canNavigateBackward}>
           {'<'}
         </button>
         <button disabled={true}>{currentPageIndex + 1}</button>
-        <button onClick={table.nextPage} disabled={!table.getCanNextPage()}>
+        <button onClick={table.nextPage} disabled={!canNavigateForward}>
           {'>'}
         </button>
-        <button onClick={table.lastPage} disabled={!table.getCanNextPage()}>
+        <button onClick={table.lastPage} disabled={!canNavigateForward}>
           {numberOfPages}
         </button>
       </span>
