@@ -43,7 +43,8 @@ const allF2pNonWildernessItemPickups: ItemName[] = [
   'Banana',
   'Shears',
   'Wine of zamorak',
-  'Small fishing net'
+  'Small fishing net',
+  'Tiara mould'
 ];
 
 export const allF2pWildernessItemPickups: ItemName[] = [
