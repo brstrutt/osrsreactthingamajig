@@ -44,7 +44,10 @@ const allF2pNonWildernessItemPickups: ItemName[] = [
   'Shears',
   'Wine of zamorak',
   'Small fishing net',
-  'Tiara mould'
+  'Tiara mould',
+  'Necklace mould',
+  'Ring mould',
+  'Holy mould'
 ];
 
 export const allF2pWildernessItemPickups: ItemName[] = [
