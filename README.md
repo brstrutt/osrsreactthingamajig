@@ -16,4 +16,5 @@ Preview the production build locally: `npm run preview`
 
 ## Deployment
 
-Not implemented yet, but when it is it'll be mostly automatic
+On push to master this will auto-deploy to github pages.
+Currently live site can be seen at [https://brstrutt.github.io/osrsreactthingamajig/](https://brstrutt.github.io/osrsreactthingamajig/)
